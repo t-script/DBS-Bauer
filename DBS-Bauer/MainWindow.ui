@@ -1,24 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>332</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="floatable">
+    <bool>true</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="actionNew"/>
+   <addaction name="actionTier"/>
+   <addaction name="actionFutter"/>
+   <addaction name="separator"/>
+   <addaction name="actionAngestellter"/>
+   <addaction name="actionMaschinen"/>
+   <addaction name="separator"/>
+   <addaction name="actionLager"/>
+   <addaction name="separator"/>
+   <addaction name="actionAcker"/>
+   <addaction name="actionD_nger"/>
+   <addaction name="actionSaatgut"/>
+   <addaction name="separator"/>
+  </widget>
+  <action name="actionNew">
+   <property name="text">
+    <string>Stall</string>
+   </property>
+  </action>
+  <action name="actionAngestellter">
+   <property name="text">
+    <string>Angestellter</string>
+   </property>
+  </action>
+  <action name="actionTier">
+   <property name="text">
+    <string>Tier</string>
+   </property>
+  </action>
+  <action name="actionLager">
+   <property name="text">
+    <string>Lager</string>
+   </property>
+  </action>
+  <action name="actionFutter">
+   <property name="text">
+    <string>Futter</string>
+   </property>
+  </action>
+  <action name="actionMaschinen">
+   <property name="text">
+    <string>Maschine</string>
+   </property>
+  </action>
+  <action name="actionD_nger">
+   <property name="text">
+    <string>Dünger</string>
+   </property>
+  </action>
+  <action name="actionAcker">
+   <property name="text">
+    <string>Acker</string>
+   </property>
+  </action>
+  <action name="actionSaatgut">
+   <property name="text">
+    <string>Saatgut</string>
+   </property>
+  </action>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
 </ui>
