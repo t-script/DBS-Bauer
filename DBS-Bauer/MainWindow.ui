@@ -38,9 +38,9 @@
     <enum>LeftToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
-   <addaction name="actionNew"/>
+   <addaction name="actionStall"/>
    <addaction name="actionTier"/>
    <addaction name="actionFutter"/>
    <addaction name="separator"/>
@@ -54,7 +54,7 @@
    <addaction name="actionSaatgut"/>
    <addaction name="separator"/>
   </widget>
-  <action name="actionNew">
+  <action name="actionStall">
    <property name="text">
     <string>Stall</string>
    </property>
