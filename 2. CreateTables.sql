@@ -1,16 +1,3 @@
-IF EXISTS (SELECT 1 FROM pg_database WHERE datname = 'bauerDb') THEN
-	RAISE EXCEPTION 'Datenbank wurde bereits erstellt';
-END IF ;
-
-CREATE DATABASE bauerDb
-	WITH
-		OWNER bauerAdmin
-		TEMPLATE template1
-		ENCODING 'UTF8'
-		TABLESPACE pg_default
-		CONNECTION LIMIT -1;
-\c bauerDb
-
 CREATE TABLE TIER (
 	PK_Tier			serial PRIMARY KEY,
 	FK_Stall		serial NOT NULL,
@@ -41,7 +28,7 @@ CREATE TABLE HUHN (
 CREATE TABLE STALL (
 	PK_Stall		serial PRIMARY KEY,
 	Stallart		text,
-	Kapazität		text NOT NULL,
+	KapazitAEt		text NOT NULL,
 	Standort		text NOT NULL
 );
 
@@ -66,8 +53,8 @@ CREATE TABLE FUTTER (
 	Preis			money
 );
 
-CREATE TABLE DÜNGER (
-	PK_Dünger		serial PRIMARY KEY,
+CREATE TABLE DUENGER (
+	PK_DUEnger		serial PRIMARY KEY,
 	Name			text,
 	Preis			money
 );
@@ -78,19 +65,19 @@ CREATE TABLE SAATGUT (
 	Preis			money
 );
 
-CREATE TABLE FUTTER_BEST	AND (
+CREATE TABLE FUTTER_BESTAND (
 	FK_Futter		serial NOT NULL,
 	FK_Lager		serial NOT NULL,
 	Bestand 		integer
 );
 
-CREATE TABLE DÜNGER_BEST	AND (
-	FK_Dünger 		serial NOT NULL,
+CREATE TABLE DUENGER_BESTAND (
+	FK_DUEnger 		serial NOT NULL,
 	FK_Lager		serial NOT NULL,
 	Bestand 		integer
 );
 
-CREATE TABLE SAATGUT_BES	TAND (
+CREATE TABLE SAATGUT_BESTAND (
 	FK_Saatgut 		serial NOT NULL,
 	FK_Lager		serial NOT NULL,
 	Bestand 		integer
@@ -99,20 +86,20 @@ CREATE TABLE SAATGUT_BES	TAND (
 CREATE TABLE LAGER (
 	PK_Lager		serial PRIMARY KEY,
 	Lagerart		text,
-	Kapazität		text
+	KapazitAEt		text
 );
 
 CREATE TABLE ACKER (
 	PK_Acker		serial PRIMARY KEY,
-	Größe			integer
+	GrOEsse			integer
 );
 
 CREATE TABLE ACKERDATEN (
 	FK_Acker		serial NOT NULL,
-	FK_Dünger 		serial NOT NULL,
+	FK_DUEnger 		serial NOT NULL,
 	FK_Saatgut 		serial NOT NULL,
 	Datum			date,
-	Meßwert			numeric(15,5)
+	Messwert			numeric(15,5)
 );
 
 -- TODO: add constraints GESCHLECHT
