@@ -1,140 +1,140 @@
 CREATE TABLE TIER (
-	PK_Tier			serial PRIMARY KEY,
-	FK_Stall		serial NOT NULL,
-	Name			text,
-	Geburtsdatum		date NOT NULL,
-	Anschaffungs_Datum	date NOT NULL,
-	Gewicht			smallint
+        PK_Tier                     SERIAL PRIMARY KEY,
+        FK_Stall					SERIAL REFERENCES STALL (PK_Stall),
+        Name                        VARCHAR(50) NOT NULL,
+        Geburtsdatum                DATE NOT NULL,
+        Anschaffungs_Datum			DATE NOT NULL,
+        Gewicht                     SMALLINT
 );
 
 CREATE TABLE SCHWEIN (
-	PK_Schwein		serial PRIMARY KEY,
-	FK_Tier			serial NOT NULL,
-	Schlachttermin		date
+        PK_Schwein					SERIAL PRIMARY KEY,
+        FK_Tier                     SERIAL REFERENCES TIER (PK_Tier),
+        Schlachttermin              DATE
 );
 
 CREATE TABLE KUH (
-	PK_KUH			serial PRIMARY KEY,
-	FK_Tier			serial NOT NULL,
-	Milchmenge_avg		numeric(5,2)
+        PK_KUH                      SERIAL PRIMARY KEY,
+        FK_Tier                     SERIAL REFERENCES TIER (PK_Tier),
+        Milchmenge_avg              NUMERIC(5,2)
 );
 
 CREATE TABLE HUHN (
-	PK_HUHN			serial PRIMARY KEY,
-	FK_Tier			serial NOT NULL,
-	Eier_avg		smallint
+        PK_HUHN                     SERIAL PRIMARY KEY,
+        FK_Tier                     SERIAL SERIAL REFERENCES TIER (PK_Tier),
+        Eier_avg					SMALLINT
 );
-	
+        
 CREATE TABLE STALL (
-	PK_Stall		serial PRIMARY KEY,
-	Stallart		text,
-	KapazitAEt		text NOT NULL,
-	Standort		text NOT NULL
+        PK_Stall					SERIAL PRIMARY KEY,
+        Stallart					VARCHAR(50),
+        Kapazität					SMALLINT NOT NULL,
+        Standor						VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE TIERARZTBESUCH (
-	PK_Tierarztbesuch	serial PRIMARY KEY,
-	FK_Tier			serial NOT NULL,
-	Datum			date,
-	Diagnose		text,
-	Medikamente		text
+        PK_Tierarztbesuch			SERIAL PRIMARY KEY,
+        FK_Tier                     SERIAL NOT NULL,
+        Datum                       DTAE,
+        Diagnose					TEXT,
+        Medikamente					VARCHAR(100)
 );
 
 CREATE TABLE FUTTERMENGE_PRO_TIER (
-	FK_Tier			serial NOT NULL,
-	FK_Futter		serial NOT NULL,
-	Datum_von		date,
-	Datum_bis		date
+        FK_Tier						SERIAL SERIAL REFERENCES TIER (PK_Tier),
+        FK_Futter					SERIAL REFERENCES FUTTER (PK_Futter),
+        Datum_von					DATE,
+        Datum_bis					DATE
 );
 
 CREATE TABLE FUTTER (
-	PK_Futter		serial PRIMARY KEY,
-	Name			text,
-	Preis			money
+        PK_Futter					SERIAL PRIMARY KEY,
+        Name                        VARCHAR(50),
+        Preis                       MONEY
 );
 
-CREATE TABLE DUENGER (
-	PK_DUEnger		serial PRIMARY KEY,
-	Name			text,
-	Preis			money
+CREATE TABLE DÜNGER (
+        PK_Dünger					SERIAL PRIMARY KEY,
+        Name                        VARCHAR(50),
+        Preis                       MONEY
 );
 
 CREATE TABLE SAATGUT (
-	PK_Saatgut		serial PRIMARY KEY,
-	Name			text,
-	Preis			money
+        PK_Saatgut					SERIAL PRIMARY KEY,
+        Name                        VARCHAR(50),
+        Preis                       MONEY
 );
 
 CREATE TABLE FUTTER_BESTAND (
-	FK_Futter		serial NOT NULL,
-	FK_Lager		serial NOT NULL,
-	Bestand 		integer
+        FK_Futter					SERIAL REFERENCES FUTTER (PK_Futter),
+        FK_Lager					SERIAL REFERENCES LAGER (PK_Lager),
+        Bestand						SMALLINT
 );
 
-CREATE TABLE DUENGER_BESTAND (
-	FK_DUEnger 		serial NOT NULL,
-	FK_Lager		serial NOT NULL,
-	Bestand 		integer
+CREATE TABLE DÜNGER_BESTAND (
+        FK_Dünger					SERIAL REFERENCES DÜNGER (PK_Dünger),
+        FK_Lager					SERIAL REFERENCES LAGER (PK_Lager),
+        Bestand						SMALLINT
 );
 
 CREATE TABLE SAATGUT_BESTAND (
-	FK_Saatgut 		serial NOT NULL,
-	FK_Lager		serial NOT NULL,
-	Bestand 		integer
+        FK_Saatgut					SERIAL REFERENCES SAATGUT (PK_Saatgut),
+        FK_Lager					SERIAL REFERENCES LAGER (PK_Lager),
+        Bestand						SMALLINT
 );
 
 CREATE TABLE LAGER (
-	PK_Lager		serial PRIMARY KEY,
-	Lagerart		text,
-	KapazitAEt		text
+        PK_Lager					SERIAL PRIMARY KEY,
+        Lagerart					VAHRCHAR(50),
+        Kapazität					SMALLINT
 );
 
 CREATE TABLE ACKER (
-	PK_Acker		serial PRIMARY KEY,
-	GrOEsse			integer
+        PK_Acker					SERIAL PRIMARY KEY,
+        Größe                       SMALLINT
 );
 
 CREATE TABLE ACKERDATEN (
-	FK_Acker		serial NOT NULL,
-	FK_DUEnger 		serial NOT NULL,
-	FK_Saatgut 		serial NOT NULL,
-	Datum			date,
-	Messwert			numeric(15,5)
+        FK_Acker					SERIAL REFERENCES ACKER (PK_Acker),
+        FK_Dünger					SERIAL REFERENCES DÜNGER (PK_Dünger),
+        FK_Saatgut					SERIAL REFERENCES SAATGUT (PK_Saatgut),
+        Datum                       DATE
+        MESSWERT                    NUMERIC(15,5)
 );
 
--- TODO: add constraints GESCHLECHT
+
+CREATE TYPE geschlecht AS ENUM ('männlich' , 'weiblich');
 CREATE TABLE ANGESTELLTER (
-	PK_Angestellter		serial PRIMARY KEY,
-	Vorname			text NOT NULL,
-	Nachname		text NOT NULL,
-	SVN			text NOT NULL,
-	Gehalt			money NOT NULL,
-	Bankdaten		text,
-	Geschlecht		text
+        PK_Angestellter				SERIAL PRIMARY KEY,
+        Vorname                     VARCHAR(50) NOT NULL,
+        Nachname					VARCHAR(50) NOT NULL,
+        SVN							VARCHAR(30) NOT NULL,
+        Gehalt                      MONEY NOT NULL,
+        Bankdaten					VARCHAR(50),
+        Geschlecht					geschlecht
 );
 
 CREATE TABLE MASCHINE (
-	PK_Maschine		serial PRIMARY KEY,
-	FK_Lager		serial NOT NULL,
-	Kosten			money,
-	Abschreibungsdatum	date,
-	Anschaffungsdatum	date,
-	Typ			text,
-	Name			text
+        PK_Maschine					SERIAL PRIMARY KEY,
+        FK_Lager					SERIAL REFERENCES LAGER (PK_Lager),
+        Kosten                      MONEY,
+        Abschreibungsdatum			DATE,
+        Anschaffungsdatum			DATE,
+        Typ							VARCHAR(50),
+        Name                        VARCHAR(50)
 );
 
 CREATE TABLE MASCHINE_VERWENDUNG (
-	FK_Angestellter		serial NOT NULL,
-	FK_Maschine		serial NOT NULL,
-	Verwendungsdatum	date,
-	Dauer			integer
+        FK_Angestellter				SERIAL REFERENCES ANGESTELLTER (PK_Angestellter),
+        FK_Maschine					SERIAL REFERENCES MASCHINE (PK_Maschine),
+        Verwendungsdatum			DATE,
+        Dauer                       SMALLINT
 );
 
 CREATE TABLE ANGESTELLTER_STALLARBEITEN (
-	FK_Stall		serial NOT NULL,
-	FK_Angestellter		serial NOT NULL,
-	VerichteteArbeit	text,
-	Datum			date,
-	Dauer			integer
+        FK_Stall					SERIAL REFERENCES STALL (PK_STALL),
+        FK_Angestellter				SERIAL REFERENCES ANGESTELLTER (PK_Angestellter),
+        VerichteteArbeit			TEXT,
+        Datum                       DATE,
+        Dauer                       SMALLINT
 );
-
