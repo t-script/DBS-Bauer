@@ -1,4 +1,4 @@
--- drop schema public cascade;
+﻿-- drop schema public cascade;
 -- create schema public;
 
 CREATE TABLE STALL (
@@ -37,7 +37,13 @@ CREATE TABLE ACKER (
 	Groesse			integer -- m²
 );
 
-CREATE TYPE geschlecht AS ENUM ('maennlich' , 'weiblich');
+DO $$
+BEGIN
+	IF (SELECT 0 FROM pg_type WHERE typname = 'geschlecht') THEN
+		CREATE TYPE geschlecht AS ENUM ('maennlich' , 'weiblich');
+	END IF;
+END$$;
+
 CREATE TABLE ANGESTELLTER (
 	PK_Angestellter		serial PRIMARY KEY,
 	Vorname			text NOT NULL,
