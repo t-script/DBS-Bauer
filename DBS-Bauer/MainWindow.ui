@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>470</width>
     <height>332</height>
    </rect>
   </property>
@@ -23,6 +23,17 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QStackedWidget" name="stackedWidget">
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <widget class="TierWidget" name="Tiere"/>
+         <widget class="FutterWidget" name="Futter"/>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -53,6 +64,23 @@
    <addaction name="actionD_nger"/>
    <addaction name="actionSaatgut"/>
    <addaction name="separator"/>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>470</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDatei">
+    <property name="title">
+     <string>Datei</string>
+    </property>
+    <addaction name="actionBeenden"/>
+   </widget>
+   <addaction name="menuDatei"/>
   </widget>
   <action name="actionStall">
    <property name="text">
@@ -99,8 +127,27 @@
     <string>Saatgut</string>
    </property>
   </action>
+  <action name="actionBeenden">
+   <property name="text">
+    <string>Beenden</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>TierWidget</class>
+   <extends>QWidget</extends>
+   <header>tierwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FutterWidget</class>
+   <extends>QWidget</extends>
+   <header>futterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

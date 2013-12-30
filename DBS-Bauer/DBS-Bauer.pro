@@ -13,8 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp
+        MainWindow.cpp \
+    tierwidget.cpp \
+    futterwidget.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    tierwidget.h \
+    futterwidget.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    tierwidget.ui \
+    futterwidget.ui
