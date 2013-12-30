@@ -1,13 +1,24 @@
-IF EXISTS (SELECT 1 FROM pg_database WHERE datname = 'bauerDb') THEN
-	RAISE EXCEPTION 'Datenbank wurde bereits erstellt';
-END IF ;
+\set ON_ERROR_STOP 1
 
-CREATE DATABASE bauerDb
+DO $$
+BEGIN
+	IF EXISTS (SELECT 1 FROM pg_database WHERE datname = 'bauerdb') THEN
+		RAISE EXCEPTION 'Datenbank wurde bereits erstellt';
+	END IF;
+END$$;
+
+CREATE ROLE baueradmin 
+	PASSWORD 'bauer'  
+	NOSUPERUSER 
+	NOCREATEDB 
+	CREATEROLE 
+	INHERIT 
+	LOGIN;
+
+CREATE DATABASE bauerdb
 	WITH
-		OWNER bauerAdmin
+		OWNER baueradmin
 		TEMPLATE template1
 		ENCODING 'UTF8'
 		TABLESPACE pg_default
 		CONNECTION LIMIT -1;
-\c bauerDb
-
