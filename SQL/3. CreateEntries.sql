@@ -7,9 +7,9 @@ TRUNCATE DUENGER CASCADE;
 TRUNCATE ATTRIBUTE CASCADE;
 TRUNCATE SAATGUT CASCADE;
 
-INSERT INTO STALL VALUES (1, 'Schweinestall', '100', 'Nebenhof');
-INSERT INTO STALL VALUES (2, 'Kuhstall', '10', 'Haupthof');
-INSERT INTO STALL VALUES (3, 'Hühnerstall', '10', 'Haupthof');
+INSERT INTO STALL VALUES (1, 'Schweinestall', '1000', 'Nebenhof');
+INSERT INTO STALL VALUES (2, 'Kuhstall', '1000', 'Haupthof');
+INSERT INTO STALL VALUES (3, 'Hühnerstall', '1000', 'Haupthof');
 
 INSERT INTO ATTRIBUTE VALUES (1, 'Tierart', 'Hausschwein');
 INSERT INTO ATTRIBUTE VALUES (2, 'Tierart', 'Hausrind');
@@ -53,7 +53,7 @@ BEGIN
 		INSERT INTO TIER_ATTRIBUTE VALUES(i, 2);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(i, 2, 3);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(i, 4, 3);
-		INSERT INTO TIERARZTBESUCH(fk_tier,datum, diagnose, medikamente) VALUES (i, current_date + 3, null, null);
+		INSERT INTO TIERARZTBESUCH(fk_tier,datum, diagnose, medikamente) VALUES (i, current_date + i % 10, null, null);
 	END LOOP;
 -- Hühner
 	FOR i IN 2003..3003 LOOP
