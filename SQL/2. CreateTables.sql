@@ -15,7 +15,7 @@ CREATE TABLE FUTTER (
 );
 
 CREATE TABLE DUENGER (
-	PK_DUEnger		serial PRIMARY KEY,
+	PK_Duenger		serial PRIMARY KEY,
 	Name			text,
 	Preis			float -- €/kg
 );
@@ -129,14 +129,14 @@ CREATE TABLE MASCHINE_VERWENDUNG (
         FK_Angestellter		serial REFERENCES ANGESTELLTER (PK_Angestellter),
         FK_Maschine		serial REFERENCES MASCHINE (PK_Maschine),
 	Verwendungsdatum	date,
-	Dauer			float -- h
+	Dauer			Interval -- h
 );
 
 CREATE TABLE ANGESTELLTER_STALLARBEITEN (
         FK_Stall		serial REFERENCES STALL (PK_Stall),
         FK_Angestellter		serial REFERENCES ANGESTELLTER (PK_Angestellter),
-	VerichteteArbeit	text,
+	VerrichteteArbeit	text,
 	Datum			date,
-	Dauer			float -- h
+	Dauer			Interval -- h
 );
 

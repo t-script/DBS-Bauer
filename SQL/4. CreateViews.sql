@@ -38,7 +38,7 @@ CREATE OR REPLACE VIEW "v_Huehner" AS
 		TIER.Name, 
 		TIER.Geburtsdatum, 
 		TIER.Anschaffungs_Datum, 
-		TIER.Gewicht 
+		TIER.Gewicht, 
 		(ATTRIBUTE.Wert) AS TIERART
 	FROM 
 		public.TIER, 
