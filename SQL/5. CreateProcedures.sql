@@ -32,9 +32,10 @@ RETURN QUERY
 END
 $func$ LANGUAGE plpgsql;
 
+COMMENT ON FUNCTION usp_TierArztBesuche(_id integer) IS 'Zeigt alle Tierarztbesuche des Tieres anhand des Primary Keys an';
 --SELECT * FROM usp_TierArztBesuche(1023);
 
-CREATE OR REPLACE FUNCTION usp_AngestellterStallarbeiten(_id integer) 
+CREATE OR REPLACE FUNCTION usp_AngestellterStallarbeiten(_id integer, _start date, _end Date) 
 	RETURNS TABLE(
 		PK_Angestellter integer,
 		Vorname text,
@@ -65,8 +66,10 @@ RETURN QUERY
 	ON
 		ANGESTELLTER_STALLARBEITEN.FK_Angestellter = ANGESTELLTER.PK_Angestellter
 	WHERE
-		ANGESTELLTER.PK_Angestellter = _id;
+		ANGESTELLTER.PK_Angestellter = _id AND
+		ANGESTELLTER_STALLARBEITEN.Datum BETween _start and _end;
 end
 $func$ language plpgsql;
 
---SELECT * FROM usp_AngestellterStallarbeiten(1);
+COMMENT ON FUNCTION usp_AngestellterStallarbeiten(_id integer, _start date, _end Date) IS 'Gibt alle Verrichteten Arbeiten eines Angestellten innerhalb des angegebenenZeitraums aus';
+--SELECT * FROM usp_AngestellterStallarbeiten(2, '1961-06-16', now()::date);
