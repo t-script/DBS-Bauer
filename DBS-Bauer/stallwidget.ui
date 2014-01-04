@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StallWidget</class>
+ <widget class="QWidget" name="StallWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>731</width>
+    <height>479</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Übersicht</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableView" name="tableStall"/>
+   </item>
+   <item>
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_25">
+     <property name="text">
+      <string>Informationen</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Tiere, die im ausgewählten Stall untergebracht sind</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableView" name="tableStallTiere"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_26">
+     <property name="text">
+      <string>Stallarbeiten</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableView" name="tableStallarbeiten"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FutterWidget</class>
- <widget class="QWidget" name="FutterWidget">
+ <class>DuengerWidget</class>
+ <widget class="QWidget" name="DuengerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>401</width>
+    <height>306</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,24 +15,24 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label_8">
+    <widget class="QLabel" name="label_15">
      <property name="text">
       <string>Übersicht</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableFutter"/>
+    <widget class="QTableView" name="tableDunger"/>
    </item>
    <item>
-    <widget class="QLabel" name="label_10">
+    <widget class="QLabel" name="label_23">
      <property name="text">
       <string>Bestand</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableFutterBestand"/>
+    <widget class="QTableView" name="tableDungerbestand_2"/>
    </item>
   </layout>
  </widget>

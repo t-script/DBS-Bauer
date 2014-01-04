@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>513</width>
-    <height>568</height>
+    <height>581</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,362 +33,61 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>8</number>
       </property>
-      <widget class="QWidget" name="Stall">
+      <widget class="StallWidget" name="Stall">
        <attribute name="title">
         <string>Stall</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableStall"/>
-        </item>
-        <item>
-         <widget class="Line" name="line_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_25">
-          <property name="text">
-           <string>Informationen</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Tiere, die im ausgewählten Stall untergebracht sind</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableStallTiere"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_26">
-          <property name="text">
-           <string>Stallarbeiten</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableStallarbeiten"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout"/>
       </widget>
-      <widget class="QWidget" name="Tier">
+      <widget class="TierWidget" name="Tier">
        <attribute name="title">
         <string>Tier</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableTier"/>
-        </item>
-        <item>
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Informationen über ausgewähltes Tier</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Tier befindet sich im Stall</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineStall"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Tier hat folgende Attribute</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableAttribute"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Tierarzt </string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableArzt"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Futtermenge</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableFutterTier"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_2"/>
       </widget>
-      <widget class="QWidget" name="Futter">
+      <widget class="FutterWidget" name="Futter">
        <attribute name="title">
         <string>Futter</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableFutter"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>Bestand</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableFutterBestand"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_3"/>
       </widget>
-      <widget class="QWidget" name="Maschine">
+      <widget class="MaschineWidget" name="Maschine">
        <attribute name="title">
         <string>Maschine</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableMaschine"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_12">
-          <property name="text">
-           <string>Verwendungschronik der ausgewählten Maschine</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableVerwendung"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_4"/>
       </widget>
-      <widget class="QWidget" name="Lager">
+      <widget class="LagerWidget" name="Lager">
        <attribute name="title">
         <string>Lager</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_7">
-        <item>
-         <widget class="QLabel" name="label_13">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableLager"/>
-        </item>
-        <item>
-         <widget class="Line" name="line_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_17">
-          <property name="text">
-           <string>Informationen</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_18">
-          <property name="text">
-           <string>Maschinen, die sich im Lager befinden</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableLagerMaschine"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_19">
-          <property name="text">
-           <string>Futterbestand</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableFutterbestand"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_20">
-          <property name="text">
-           <string>Düngerbestand</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableDungerbestand"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_21">
-          <property name="text">
-           <string>Saatgutbestand</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableSaatgutbestand"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_7"/>
       </widget>
-      <widget class="QWidget" name="Acker">
+      <widget class="AckerWidget" name="Acker">
        <attribute name="title">
         <string>Acker</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_8">
-        <item>
-         <widget class="QLabel" name="label_14">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableView_5"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_22">
-          <property name="text">
-           <string>Ackerdaten</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableAcker"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_8"/>
       </widget>
-      <widget class="QWidget" name="Dunger">
+      <widget class="DuengerWidget" name="Duenger">
        <attribute name="title">
         <string>Dünger</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_6">
-        <item>
-         <widget class="QLabel" name="label_15">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableDunger"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_23">
-          <property name="text">
-           <string>Bestand</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableDungerbestand_2"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_6"/>
       </widget>
-      <widget class="QWidget" name="Saatgut">
+      <widget class="SaatgutWidget" name="Saatgut">
        <attribute name="title">
         <string>Saatgut</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <item>
-         <widget class="QLabel" name="label_16">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableSaagut"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_24">
-          <property name="text">
-           <string>Bestand</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableSaatgutbestand_2"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_5"/>
       </widget>
-      <widget class="QWidget" name="Angestellter">
+      <widget class="AngestellterWidget" name="Angestellter">
        <attribute name="title">
         <string>Angestellter</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_9">
-        <item>
-         <widget class="QLabel" name="label_27">
-          <property name="text">
-           <string>Übersicht</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableAngestellter"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_28">
-          <property name="text">
-           <string>Arbeit, die ein Angestellter verrichtet hat</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tableArbeit"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_9"/>
       </widget>
      </widget>
     </item>
@@ -400,7 +99,7 @@
      <x>0</x>
      <y>0</y>
      <width>513</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
@@ -463,6 +162,62 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>StallWidget</class>
+   <extends>QWidget</extends>
+   <header>stallwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TierWidget</class>
+   <extends>QWidget</extends>
+   <header>tierwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MaschineWidget</class>
+   <extends>QWidget</extends>
+   <header>maschinewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FutterWidget</class>
+   <extends>QWidget</extends>
+   <header>futterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LagerWidget</class>
+   <extends>QWidget</extends>
+   <header>lagerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AckerWidget</class>
+   <extends>QWidget</extends>
+   <header>ackerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DuengerWidget</class>
+   <extends>QWidget</extends>
+   <header>duengerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SaatgutWidget</class>
+   <extends>QWidget</extends>
+   <header>saatgutwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AngestellterWidget</class>
+   <extends>QWidget</extends>
+   <header>angestellterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT       += sql
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,14 +13,35 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp \
+	MainWindow.cpp \
+    stallwidget.cpp \
     tierwidget.cpp \
-    futterwidget.cpp
+    maschinewidget.cpp \
+    futterwidget.cpp \
+    lagerwidget.cpp \
+    ackerwidget.cpp \
+    duengerwidget.cpp \
+    saatgutwidget.cpp \
+    angestellterwidget.cpp
 
 HEADERS  += MainWindow.h \
+    stallwidget.h \
     tierwidget.h \
-    futterwidget.h
+    maschinewidget.h \
+    futterwidget.h \
+    lagerwidget.h \
+    ackerwidget.h \
+    duengerwidget.h \
+    saatgutwidget.h \
+    angestellterwidget.h
 
 FORMS    += MainWindow.ui \
+    stallwidget.ui \
     tierwidget.ui \
-    futterwidget.ui
+    maschinewidget.ui \
+    futterwidget.ui \
+    lagerwidget.ui \
+    ackerwidget.ui \
+    duengerwidget.ui \
+    saatgutwidget.ui \
+    angestellterwidget.ui
