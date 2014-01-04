@@ -79,7 +79,7 @@ COMMENT ON
 --SELECT * FROM usp_AngestellterStallarbeiten(2, '1961-06-16', now()::date);
 
 CREATE OR REPLACE FUNCTION usp_MaschineVerwendung(_id integer, _start date, _end Date)
-RETURNS TABLE(
+	RETURNS TABLE(
 		PK_Angestellter integer,
 		Vorname text,
 		Nachname text,
@@ -124,3 +124,65 @@ COMMENT ON
 	FUNCTION usp_MaschineVerwendung(_id integer, _start date, _end Date)
 	IS 'Gibt alle Verwendeten Maschinen eines Angestellten innerhalb des angegebenen Zeitraums aus';
 --SELECT * FROM usp_MaschineVerwendung(2, '1961-06-16', now()::date);
+
+CREATE OR REPLACE FUNCTION 
+	usp_TierHinzufuegen(
+		_Stallid integer, 
+		_Tiername text,
+		_Geburtsdatum date,
+		_Anschaffungs_Datum date,
+		_Gewicht double precision,
+		_Tierart text
+		
+	)
+	RETURNS BOOLEAN
+	AS $$
+DECLARE
+
+BEGIN
+	INSERT INTO 
+		public.TIER(
+			FK_Stall, 
+			Name, 
+			Geburtsdatum, 
+			Anschaffungs_Datum, 
+			Gewicht
+		) 
+	VALUES
+		(
+			_Stallid,
+			_Tiername,
+			_Geburtsdatum,
+			_Anschaffungs_Datum,
+			_Gewicht
+		);
+		
+	INSERT INTO
+		public.TIER_ATTRIBUTE
+	VALUES
+		(
+			currval('tier_pk_tier_seq'),
+			(
+				SELECT 
+					PK_Attribute
+				FROM
+					public.Attribute
+				WHERE
+					Name = 'Tierart' AND 
+					Wert = _Tierart
+			)
+		);
+	RETURN True;
+	
+EXCEPTION
+	WHEN not_null_violation THEN
+		RAISE NOTICE 'Tierart existiert nicht';
+		return False;	
+END
+$$ LANGUAGE plpgsql;
+
+COMMENT ON
+	FUNCTION usp_TierHinzufuegen(_Stallid integer, _Tiername text, _Geburtsdatum date, _Anschaffungs_Datum date, _Gewicht double precision, _Tierart text)
+	IS 'Ein neues Tier eintragen, Tierart muss existieren';
+
+--SELECT usp_TierHinzufuegen(1,'bess', '1999-06-16', '1999-08-23', 250, 'Hausrsind'); -- exception test
