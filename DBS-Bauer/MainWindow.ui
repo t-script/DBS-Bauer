@@ -21,7 +21,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>8</number>
+       <number>1</number>
       </property>
       <widget class="StallWidget" name="Stall">
        <attribute name="title">

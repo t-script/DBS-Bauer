@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     ackerwidget.cpp \
     duengerwidget.cpp \
     saatgutwidget.cpp \
-    angestellterwidget.cpp
+    angestellterwidget.cpp \
+    bauerexception.cpp
 
 HEADERS  += MainWindow.h \
     stallwidget.h \
@@ -33,7 +34,8 @@ HEADERS  += MainWindow.h \
     ackerwidget.h \
     duengerwidget.h \
     saatgutwidget.h \
-    angestellterwidget.h
+    angestellterwidget.h \
+    bauerexception.h
 
 FORMS    += MainWindow.ui \
     stallwidget.ui \

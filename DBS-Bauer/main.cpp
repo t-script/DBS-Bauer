@@ -21,6 +21,9 @@ int main(int argc, char *argv[])
 		} else {
 			qDebug() << "psql connection success\n";
 		}
+	} else {
+		qDebug() << "Database Driver not available\n";
+
 	}
 	MainWindow w;
 	w.show();
