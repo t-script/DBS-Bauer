@@ -132,8 +132,10 @@ CREATE OR REPLACE FUNCTION
 		_Geburtsdatum date,
 		_Anschaffungs_Datum date,
 		_Gewicht double precision,
-		_Tierart text
-		
+		_Tierart text,
+		_Futterid integer,
+		_Futtermenge double precision,
+		_Datum date DEFAULT now()
 	)
 	RETURNS BOOLEAN
 	AS $$
@@ -172,6 +174,16 @@ BEGIN
 					Wert = _Tierart
 			)
 		);
+
+	INSERT INTO 
+		public.FUTTERMENGE_PRO_TIER
+	VALUES
+		(
+			currval('tier_pk_tier_seq'),
+			_Futterid,
+			_Futtermenge,
+			_Datum
+		);
 	RETURN True;
 	
 EXCEPTION
@@ -182,7 +194,16 @@ END
 $$ LANGUAGE plpgsql;
 
 COMMENT ON
-	FUNCTION usp_TierHinzufuegen(_Stallid integer, _Tiername text, _Geburtsdatum date, _Anschaffungs_Datum date, _Gewicht double precision, _Tierart text)
+	FUNCTION usp_TierHinzufuegen(
+		_Stallid integer, 
+		_Tiername text, 
+		_Geburtsdatum date, 
+		_Anschaffungs_Datum date, 
+		_Gewicht double precision, 
+		_Tierart text, 
+		_Futterid integer, 
+		_Futtermenge double precision, 
+		_Datum date)
 	IS 'Ein neues Tier eintragen, Tierart muss existieren';
 
---SELECT usp_TierHinzufuegen(1,'bess', '1999-06-16', '1999-08-23', 250, 'Hausrsind'); -- exception test
+--SELECT usp_TierHinzufuegen(1, 'bess', '1999-06-16', '1999-08-23', 250, 'Hausrind', 4, 3);
