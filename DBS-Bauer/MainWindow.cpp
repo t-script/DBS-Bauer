@@ -7,46 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+    ui->actionBeenden->setShortcut(tr("CTRL+B"));
+    connect(ui->actionBeenden, SIGNAL(triggered()), this, SLOT(close()));
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
-}
-
-void MainWindow::on_actionStall_triggered()
-{
-	qDebug() << "Stall pressed.\n";
-}
-
-void MainWindow::on_actionAngestellter_triggered()
-{
-}
-
-void MainWindow::on_actionTier_triggered()
-{
-}
-
-void MainWindow::on_actionLager_triggered()
-{
-}
-
-void MainWindow::on_actionFutter_triggered()
-{
-}
-
-void MainWindow::on_actionMaschinen_triggered()
-{
-}
-
-void MainWindow::on_actionD_nger_triggered()
-{
-}
-
-void MainWindow::on_actionAcker_triggered()
-{
-}
-
-void MainWindow::on_actionSaatgut_triggered()
-{
 }
