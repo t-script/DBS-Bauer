@@ -16,6 +16,9 @@ public:
 	explicit TierWidget(QWidget *parent = 0);
 	~TierWidget();
 
+private slots:
+	void on_tableTier_clicked(const QModelIndex &index);
+
 private:
 	Ui::TierWidget *ui;
 

@@ -16,10 +16,18 @@ TierWidget::TierWidget(QWidget *parent) :
 		qDebug() << tiere->lastError();
 	}
 	ui->tableTier->setModel(tiere);
+	ui->tableTier->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->tableTier->setSelectionMode(QAbstractItemView::SingleSelection);
 }
 
 TierWidget::~TierWidget()
 {
 	delete tiere;
 	delete ui;
+}
+
+void TierWidget::on_tableTier_clicked(const QModelIndex &index)
+{
+	//int row = ui->tableTier->selectionModel()->selectedRows().first().row();
+	qDebug("Zeile = %d", index.row());
 }
