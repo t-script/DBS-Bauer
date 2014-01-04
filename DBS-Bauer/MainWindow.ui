@@ -15,18 +15,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
     <item>
      <widget class="QTabWidget" name="tabBauer">
       <property name="styleSheet">
@@ -39,55 +27,46 @@
        <attribute name="title">
         <string>Stall</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout"/>
       </widget>
       <widget class="TierWidget" name="Tier">
        <attribute name="title">
         <string>Tier</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2"/>
       </widget>
       <widget class="FutterWidget" name="Futter">
        <attribute name="title">
         <string>Futter</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3"/>
       </widget>
       <widget class="MaschineWidget" name="Maschine">
        <attribute name="title">
         <string>Maschine</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4"/>
       </widget>
       <widget class="LagerWidget" name="Lager">
        <attribute name="title">
         <string>Lager</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_7"/>
       </widget>
       <widget class="AckerWidget" name="Acker">
        <attribute name="title">
         <string>Acker</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_8"/>
       </widget>
       <widget class="DuengerWidget" name="Duenger">
        <attribute name="title">
         <string>Dünger</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_6"/>
       </widget>
       <widget class="SaatgutWidget" name="Saatgut">
        <attribute name="title">
         <string>Saatgut</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_5"/>
       </widget>
       <widget class="AngestellterWidget" name="Angestellter">
        <attribute name="title">
         <string>Angestellter</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_9"/>
       </widget>
      </widget>
     </item>
