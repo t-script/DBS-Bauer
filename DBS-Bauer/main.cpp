@@ -3,8 +3,6 @@
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 
-#define CONNECTION "Driver={PostgreSQL Unicode};SERVER=127.0.0.1;PORT=5432;UID=baueradmin;PWD=bauer;DATABASE=bauerdb;Trusted_Connection=YES"
-
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
@@ -22,7 +20,7 @@ int main(int argc, char *argv[])
 			qDebug() << "psql connection success\n";
 		}
 	} else {
-		qDebug() << "Database Driver not available\n";
+		qDebug() << "Database Driver not available. libqt5sql5-psql is probably not installed\n";
 
 	}
 	MainWindow w;

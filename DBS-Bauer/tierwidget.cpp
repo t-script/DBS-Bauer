@@ -18,6 +18,7 @@ TierWidget::TierWidget(QWidget *parent) :
 	ui->tableTier->setModel(tiere);
 	ui->tableTier->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableTier->setSelectionMode(QAbstractItemView::SingleSelection);
+	ui->tableTier->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 TierWidget::~TierWidget()

@@ -39,7 +39,8 @@ CREATE TABLE ACKER (
 
 DO $$
 BEGIN
-	IF (SELECT 0 FROM pg_type WHERE typname = 'geschlecht') THEN
+	IF (SELECT 1 FROM pg_type WHERE typname = 'geschlecht') THEN
+	ELSE
 		CREATE TYPE geschlecht AS ENUM ('maennlich' , 'weiblich');
 	END IF;
 END$$;
