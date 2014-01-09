@@ -22,7 +22,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableLager"/>
+    <widget class="QTableView" name="tableLager">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>150</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="Line" name="line_2">
@@ -46,7 +53,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableLagerMaschine"/>
+    <widget class="QTableView" name="tableLagerMaschine">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_19">
@@ -56,7 +70,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableFutterbestand"/>
+    <widget class="QTableView" name="tableFutterbestand">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_20">
@@ -66,7 +87,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableDungerbestand"/>
+    <widget class="QTableView" name="tableDungerbestand">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_21">
@@ -76,7 +104,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableSaatgutbestand"/>
+    <widget class="QTableView" name="tableSaatgutbestand">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

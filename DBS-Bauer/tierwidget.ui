@@ -22,7 +22,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableTier"/>
+    <widget class="QTableView" name="tableTier">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>120</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="Line" name="line">
@@ -56,7 +63,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableAttribute"/>
+    <widget class="QTableView" name="tableAttribute">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_7">
@@ -66,7 +80,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableArzt"/>
+    <widget class="QTableView" name="tableArzt">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_9">
@@ -76,7 +97,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableFutterTier"/>
+    <widget class="QTableView" name="tableFutterTier">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
