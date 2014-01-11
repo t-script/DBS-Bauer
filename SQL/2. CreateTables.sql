@@ -34,6 +34,7 @@ CREATE TABLE LAGER (
 
 CREATE TABLE ACKER (
 	PK_Acker		serial PRIMARY KEY,
+	Standort		text,
 	Groesse			integer -- m²
 );
 

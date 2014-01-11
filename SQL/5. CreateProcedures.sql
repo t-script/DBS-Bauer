@@ -207,3 +207,51 @@ COMMENT ON
 	IS 'Ein neues Tier eintragen, Tierart muss existieren';
 
 --SELECT usp_TierHinzufuegen(1, 'bess', '1999-06-16', '1999-08-23', 250, 'Hausrind', 4, 3);
+
+CREATE OR REPLACE FUNCTION
+	usp_AckerDaten(_id integer, _start date, _end Date)
+	RETURNS TABLE(
+		PK_Acker integer,
+		Standort text,
+		Groesse integer,
+		Datum Date,
+		Messwert double precision,
+		Saatgut_Name text,
+		Duenger_Name text
+	)
+	AS $func$
+
+DECLARE
+
+BEGIN
+
+RETURN QUERY
+	SELECT
+		ACKER.PK_Acker,
+		ACKER.Standort,
+		ACKER.Groesse,
+		ACKERDATEN.Datum,
+		ACKERDATEN.Messwert,
+		SAATGUT.Name,
+		DUENGER.Name
+	FROM
+		ACKER
+	JOIN
+		ACKERDATEN
+	ON
+		ACKER.PK_Acker = ACKERDATEN.FK_Acker
+	JOIN
+		SAATGUT
+	ON
+		ACKERDATEN.FK_Saatgut = SAATGUT.PK_Saatgut
+	JOIN
+		DUENGER
+	ON
+		ACKERDATEN.FK_Duenger = DUENGER.PK_Duenger
+	WHERE
+		ACKER.PK_Acker = _id AND
+		ACKERDATEN.Datum BETWEEN _start AND _end;
+END
+$func$ LANGUAGE plpgsql;
+
+-- SELECT * FROM usp_AckerDaten(2,'1961-06-11','1962-07-26');
