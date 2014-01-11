@@ -299,3 +299,21 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 */
+
+CREATE OR REPLACE FUNCTION 
+	usp_UpdateTierFutter(
+		_id integer, 
+		_futterid integer, 
+		_menge double precision, 
+		_date date = now()
+	)
+	RETURNS VOID
+	AS $$
+
+DECLARE
+
+BEGIN
+	INSERT INTO FUTTERMENGE_PRO_TIER VALUES(_id, _futterid, _menge, _date);
+END
+$$ LANGUAGE plpgsql;
+
