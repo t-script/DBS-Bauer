@@ -46,6 +46,8 @@ BEGIN
 		INSERT INTO TIER(FK_Stall, Name, Geburtsdatum,Anschaffungsdatum, Gewicht) VALUES(1, null, now(), now(), (i + 200) % 300);
 		INSERT INTO TIER_ATTRIBUTE VALUES(currval('tier_pk_tier_seq'), 1);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(currval('tier_pk_tier_seq'), 2, 5);
+		INSERT INTO TIERARZTBESUCH(FK_Tier,Datum, Diagnose, Medikamente) VALUES (currval('tier_pk_tier_seq'), current_date + i % 30, null, null);
+		INSERT INTO TIERARZTBESUCH(FK_Tier,Datum, Diagnose, Medikamente) VALUES (currval('tier_pk_tier_seq'), current_date + i % 50, null, null);
 	END LOOP;
 -- Rinder
 	FOR i IN 1002..2002 LOOP
@@ -53,13 +55,16 @@ BEGIN
 		INSERT INTO TIER_ATTRIBUTE VALUES(currval('tier_pk_tier_seq'), 2);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(currval('tier_pk_tier_seq'), 2, 3);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(currval('tier_pk_tier_seq'), 4, 3);
-		INSERT INTO TIERARZTBESUCH(FK_Tier,Datum, Diagnose, Medikamente) VALUES (currval('tier_pk_tier_seq'), current_date + i % 10, null, null);
+		INSERT INTO TIERARZTBESUCH(FK_Tier,Datum, Diagnose, Medikamente) VALUES (currval('tier_pk_tier_seq'), current_date + i % 30, null, null);
+		INSERT INTO TIERARZTBESUCH(FK_Tier,Datum, Diagnose, Medikamente) VALUES (currval('tier_pk_tier_seq'), current_date + i % 50, null, null);
 	END LOOP;
 -- Hühner
 	FOR i IN 2003..3003 LOOP
 		INSERT INTO TIER(FK_Stall, Name, Geburtsdatum,Anschaffungsdatum, Gewicht) VALUES(3, null, now(), now(), i % 3);
 		INSERT INTO TIER_ATTRIBUTE VALUES(currval('tier_pk_tier_seq'), 3);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(currval('tier_pk_tier_seq'), 3, 1.5);
+		INSERT INTO TIERARZTBESUCH(FK_Tier,Datum, Diagnose, Medikamente) VALUES (currval('tier_pk_tier_seq'), current_date + i % 30, null, null);
+		INSERT INTO TIERARZTBESUCH(FK_Tier,Datum, Diagnose, Medikamente) VALUES (currval('tier_pk_tier_seq'), current_date + i % 50, null, null);
 	END LOOP;
 END$$;
 
