@@ -14,6 +14,7 @@ TierWidget::TierWidget(QWidget *parent) :
 	ui->setupUi(this);
 	tiere = new QSqlTableModel(ui->tableTier);
 	tierarzt = new QSqlQueryModel(ui->tableArzt);
+	attribute = new QSqlQueryModel(ui->tableAttribute);
 	tiere->setTable("tier");
 	if(tiere->select() != true) {
 		qDebug() << tiere->lastError();
@@ -34,26 +35,26 @@ TierWidget::~TierWidget()
 {
 	delete tiere;
 	delete tierarzt;
+	delete attribute;
 	delete ui;
 }
 
 void TierWidget::on_tableTier_clicked(const QModelIndex &index)
 {
+	TierTableChanged(index);
+}
+
+void TierWidget::TierTableChanged(const QModelIndex &index)
+{
 	bool ok = false;
-	QModelIndex in= tiere->index(index.row(), 0);
-	QVariant test = ui->tableTier->model()->data(in);
-	QSqlQuery q(QString("SELECT * FROM bauerdb.usp_TierArztBesuche(%1)").arg(test.toString()));
-	tierarzt->setQuery(q);
 	_currentPk = index.column() == 0 ?
 		index.data().toInt() :
 		(tiere->index(index.row(), 0)).data().toInt(&ok);
 
-	if (_currentPk <= 0) {
+	if (_currentPk <= 0 || !ok) {
 		qDebug() << tiere->lastError();
 	}
 	SetupSubTables(index);
-	qDebug("Zeile = %d", index.row());
-	qDebug("Spalte = %d", index.column());
 }
 
 void TierWidget::on_tableAttribute_clicked(const QModelIndex &index)
@@ -99,21 +100,24 @@ void TierWidget::SetupStall(const QModelIndex &index)
 
 void TierWidget::SetupAttribute(const QModelIndex &index)
 {
-	QSqlTableModel attributes;
 	QSqlQuery q;
-	if (!q.exec(QString("SELECT usp_TierAttribute(%1);").arg(QString::number(_currentPk)))) {
+	if (!q.exec(QString("SELECT * FROM usp_TierAttribute(%1);").arg(QString::number(_currentPk)))) {
 		qDebug() << q.lastError();
 	}
-	while(q.next()) {
-		attributes.insertRecord(-1, q.record());
-	}
-	ui->tableAttribute->setModel(&attributes);
-	ui->tableAttribute->setSelectionBehavior(QAbstractItemView::SelectRows);
-	ui->tableAttribute->setSelectionMode(QAbstractItemView::SingleSelection);
+	attribute->setQuery(q);
+	ui->tableAttribute->setModel(attribute);
+	ui->tableAttribute->hideColumn(0);
 }
 
 void TierWidget::SetupTierarzt(const QModelIndex &index)
 {
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT * FROM usp_TierArztBesuche(%1)").arg(_currentPk))) {
+		qDebug() << q.lastError();
+	}
+	tierarzt->setQuery(q);
+	ui->tableArzt->setModel(tierarzt);
+	ui->tableArzt->hideColumn(0);
 }
 
 void TierWidget::SetupFutterTier(const QModelIndex &index)

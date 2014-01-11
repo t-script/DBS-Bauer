@@ -13,6 +13,7 @@ class TierWidget : public QWidget
 	Q_OBJECT
 	QSqlTableModel *tiere;
 	QSqlQueryModel *tierarzt;
+	QSqlQueryModel *attribute;
 	int _currentPk;
 public:
 	explicit TierWidget(QWidget *parent = 0);
@@ -33,7 +34,7 @@ private slots:
 
 private:
 	Ui::TierWidget *ui;
-
+	void TierTableChanged(const QModelIndex& index);
 	void SetupSubTables(const QModelIndex& index);
 	void SetupStall(const QModelIndex& index);
 	void SetupAttribute(const QModelIndex& index);
