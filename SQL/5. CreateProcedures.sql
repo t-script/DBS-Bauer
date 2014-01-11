@@ -227,6 +227,11 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
+COMMENT ON 
+	FUNCTION usp_DeleteTier(_id integer)
+	IS 'Ein Tier aus der Datenbank löschen.';
+	
+
 CREATE OR REPLACE FUNCTION
 	usp_AckerDaten(_id integer, _start date, _end Date)
 	RETURNS TABLE(
@@ -273,6 +278,12 @@ RETURN QUERY
 END
 $func$ LANGUAGE plpgsql;
 
+COMMENT ON 
+	FUNCTION usp_AckerDaten (_id integer, _start date, _end date)
+	IS 'Gibt alle Daten eines Ackers innerhalb des angegebenen Zeitraums aus.';
+
+-- SELECT * FROM usp_AckerDaten(2,'1961-06-11','1962-07-26');
+
 /*
 CREATE OR REPLACE FUNCTION usp_UpdateTierStall(stall int, tier int)
 	RETURNS BOOLEAN AS $$
@@ -288,5 +299,3 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 */
-
--- SELECT * FROM usp_AckerDaten(2,'1961-06-11','1962-07-26');
