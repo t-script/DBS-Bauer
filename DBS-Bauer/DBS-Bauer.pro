@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     duengerwidget.cpp \
     saatgutwidget.cpp \
     angestellterwidget.cpp \
-    bauerexception.cpp
+    bauerexception.cpp \
+    login.cpp
 
 HEADERS  += MainWindow.h \
     stallwidget.h \
@@ -35,7 +36,8 @@ HEADERS  += MainWindow.h \
     duengerwidget.h \
     saatgutwidget.h \
     angestellterwidget.h \
-    bauerexception.h
+    bauerexception.h \
+    login.h
 
 FORMS    += MainWindow.ui \
     stallwidget.ui \
@@ -46,4 +48,5 @@ FORMS    += MainWindow.ui \
     ackerwidget.ui \
     duengerwidget.ui \
     saatgutwidget.ui \
-    angestellterwidget.ui
+    angestellterwidget.ui \
+    login.ui
