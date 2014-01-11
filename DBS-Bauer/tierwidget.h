@@ -12,6 +12,7 @@ class TierWidget : public QWidget
 {
 	Q_OBJECT
 	QSqlTableModel *tiere;
+	QSqlQueryModel *tierarzt;
 public:
 	explicit TierWidget(QWidget *parent = 0);
 	~TierWidget();
