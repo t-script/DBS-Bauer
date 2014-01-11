@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QException>
 
 TierWidget::TierWidget(QWidget *parent) :
@@ -14,8 +15,7 @@ TierWidget::TierWidget(QWidget *parent) :
 	tiere = new QSqlTableModel(ui->tableTier);
 	tierarzt = new QSqlQueryModel(ui->tableArzt);
 	tiere->setTable("tier");
-	if(tiere->select() != true)
-	{
+	if(tiere->select() != true) {
 		qDebug() << tiere->lastError();
 	}
 	ui->tableTier->setModel(tiere);
@@ -42,7 +42,7 @@ void TierWidget::on_tableTier_clicked(const QModelIndex &index)
 	bool ok = false;
 	QModelIndex in= tiere->index(index.row(), 0);
 	QVariant test = ui->tableTier->model()->data(in);
-	QSqlQuery q(QString("SELECT * FROM usp_TierArztBesuche(%1)").arg(test.toString()));
+	QSqlQuery q(QString("SELECT * FROM bauerdb.usp_TierArztBesuche(%1)").arg(test.toString()));
 	tierarzt->setQuery(q);
 	_currentPk = index.column() == 0 ?
 		index.data().toInt() :
@@ -99,6 +99,17 @@ void TierWidget::SetupStall(const QModelIndex &index)
 
 void TierWidget::SetupAttribute(const QModelIndex &index)
 {
+	QSqlTableModel attributes;
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT usp_TierAttribute(%1);").arg(QString::number(_currentPk)))) {
+		qDebug() << q.lastError();
+	}
+	while(q.next()) {
+		attributes.insertRecord(-1, q.record());
+	}
+	ui->tableAttribute->setModel(&attributes);
+	ui->tableAttribute->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->tableAttribute->setSelectionMode(QAbstractItemView::SingleSelection);
 }
 
 void TierWidget::SetupTierarzt(const QModelIndex &index)
@@ -128,12 +139,8 @@ void TierWidget::on_comboStall_currentIndexChanged(int index)
 
 void TierWidget::on_comboStall_activated(int index)
 {
-	int fkStall = index + 1;
-	/*
-	// code ist böse
-	if (tiere->query().exec("update tier set fk_stall="+QString::number(fkStall)+" where pk_tier="+QString::number(_currentPk)+";")) {
-		qDebug() << tiere->lastError();
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT usp_UpdateTierStall(%1,%2);").arg(QString::number(index+1), QString::number(_currentPk)))) {
+		qDebug() << q.lastError();
 	}
-	*/
-	qDebug() << "PK: " << _currentPk;
 }

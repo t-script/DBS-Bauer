@@ -7,9 +7,9 @@ TRUNCATE DUENGER CASCADE;
 TRUNCATE ATTRIBUTE CASCADE;
 TRUNCATE SAATGUT CASCADE;
 
-INSERT INTO STALL(Stallart, Kapazitaet, Standort) VALUES ('Schweinestall', '1000', 'Nebenhof');
-INSERT INTO STALL(Stallart, Kapazitaet, Standort) VALUES ('Kuhstall', '1000', 'Haupthof');
-INSERT INTO STALL(Stallart, Kapazitaet, Standort) VALUES ('Hühnerstall', '1000', 'Haupthof');
+INSERT INTO STALL(Stallart, Kapazitaet, Standort) VALUES ('Schweinestall', '1500', 'Nebenhof');
+INSERT INTO STALL(Stallart, Kapazitaet, Standort) VALUES ('Kuhstall', '1500', 'Haupthof');
+INSERT INTO STALL(Stallart, Kapazitaet, Standort) VALUES ('Hühnerstall', '1500', 'Haupthof');
 
 INSERT INTO ATTRIBUTE(Name, Wert) VALUES ('Tierart', 'Hausschwein');
 INSERT INTO ATTRIBUTE(Name, Wert) VALUES ('Tierart', 'Hausrind');

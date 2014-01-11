@@ -50,3 +50,5 @@ FORMS    += MainWindow.ui \
     saatgutwidget.ui \
     angestellterwidget.ui \
     login.ui
+
+unix: QMAKE_CXXFLAGS += -std=c++11

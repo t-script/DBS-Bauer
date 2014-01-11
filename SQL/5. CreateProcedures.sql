@@ -284,21 +284,48 @@ COMMENT ON
 
 -- SELECT * FROM usp_AckerDaten(2,'1961-06-11','1962-07-26');
 
-/*
-CREATE OR REPLACE FUNCTION usp_UpdateTierStall(stall int, tier int)
+CREATE OR REPLACE FUNCTION usp_UpdateTierStall(_stall int, _tier int)
 	RETURNS BOOLEAN AS $$
 DECLARE
-	capacity integer;
-	animals integer;
+	_capacity integer := (SELECT Kapazitaet FROM STALL WHERE Pk_Stall = _stall);
+	_animals integer := (SELECT COUNT(*) FROM TIER WHERE Fk_Stall = _stall GROUP BY Fk_Stall);
 BEGIN
-		SELECT KAPAZITAET INTO capacity FROM STALL WHERE PK_STALL = stall;
-		SELECT count(*) INTO animals FROM TIER GROUP BY FK_STALL;
-		
-		IF (capacity - animals) >= 1 THEN RETURN TRUE;
+		IF (_capacity - _animals) >= 1 THEN
+			UPDATE TIER SET Fk_Stall = _stall WHERE Pk_Tier = _tier;
+			RETURN TRUE;
+		END IF;
 		RETURN FALSE;
 END
 $$ LANGUAGE plpgsql;
-*/
+
+CREATE OR REPLACE FUNCTION usp_TierAttribute(_tier int)
+	RETURNS TABLE (
+		Pk_Attribute integer,
+		Name text,
+		Wert text
+	) AS $$
+DECLARE
+BEGIN
+	RETURN QUERY
+		SELECT
+			ATTRIBUTE.Pk_Attribute AS Pk_Attribute,
+			ATTRIBUTE.Name AS Name,
+			ATTRIBUTE.Wert AS Wert
+		FROM
+			ATTRIBUTE
+		JOIN 
+			TIER_ATTRIBUTE
+		ON 
+			ATTRIBUTE.Pk_Attribute = TIER_ATTRIBUTE.Fk_Attribute
+		JOIN 
+			TIER
+		ON 
+			TIER_ATTRIBUTE.Fk_Tier = TIER.Pk_Tier
+		WHERE
+			TIER.Pk_Tier = _tier;
+END
+$$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION 
 	usp_UpdateTierFutter(
