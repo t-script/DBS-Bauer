@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableView_5"/>
+    <widget class="QTableView" name="tableAcker"/>
    </item>
    <item>
     <widget class="QLabel" name="label_22">
@@ -32,7 +32,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableAcker"/>
+    <widget class="QTableView" name="tableAckerDaten"/>
    </item>
   </layout>
  </widget>
