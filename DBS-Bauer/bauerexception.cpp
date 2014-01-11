@@ -1,4 +1,7 @@
 #include "bauerexception.h"
+#include <QtSql/QSqlDatabase>
+#include <QDebug>
+#include <QSqlError>
 
 BauerException::BauerException(QString& error)
 {

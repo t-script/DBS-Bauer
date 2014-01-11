@@ -2,6 +2,7 @@
 #define ANGESTELLTERWIDGET_H
 
 #include <QWidget>
+#include <QSqlTableModel>
 
 namespace Ui {
 class AngestellterWidget;
@@ -10,6 +11,7 @@ class AngestellterWidget;
 class AngestellterWidget : public QWidget
 {
 	Q_OBJECT
+    QSqlTableModel *angestellten;
 
 public:
 	explicit AngestellterWidget(QWidget *parent = 0);

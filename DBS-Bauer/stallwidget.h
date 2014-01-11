@@ -2,6 +2,7 @@
 #define STALLWIDGET_H
 
 #include <QWidget>
+#include <QSqlTableModel>
 
 namespace Ui {
 class StallWidget;
@@ -10,7 +11,7 @@ class StallWidget;
 class StallWidget : public QWidget
 {
 	Q_OBJECT
-
+    QSqlTableModel *staelle;
 public:
 	explicit StallWidget(QWidget *parent = 0);
 	~StallWidget();
