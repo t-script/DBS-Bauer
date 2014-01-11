@@ -212,7 +212,20 @@ COMMENT ON
 		_Datum date)
 	IS 'Ein neues Tier eintragen, Tierart muss existieren';
 
---SELECT usp_TierHinzufuegen(1, 'bess', '1999-06-16', '1999-08-23', 250, 'Hausrind', 4, 3);
+--SELECT usp_TierHinzufuegen(4, 'bess', '1999-06-16', '1999-08-23', 250, 'Hausrind', 4, 3);
+
+CREATE OR REPLACE FUNCTION
+	usp_DeleteTier(_id integer)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	DELETE FROM TIER_ATTRIBUTE WHERE FK_TIER = _id;
+	DELETE FROM FUTTERMENGE_PRO_TIER WHERE FK_TIER = _id;
+	DELETE FROM TIER WHERE PK_TIER = _id;
+END
+$$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION
 	usp_AckerDaten(_id integer, _start date, _end Date)
