@@ -273,4 +273,20 @@ RETURN QUERY
 END
 $func$ LANGUAGE plpgsql;
 
+/*
+CREATE OR REPLACE FUNCTION usp_UpdateTierStall(stall int, tier int)
+	RETURNS BOOLEAN AS $$
+DECLARE
+	capacity integer;
+	animals integer;
+BEGIN
+		SELECT KAPAZITAET INTO capacity FROM STALL WHERE PK_STALL = stall;
+		SELECT count(*) INTO animals FROM TIER GROUP BY FK_STALL;
+		
+		IF (capacity - animals) >= 1 THEN RETURN TRUE;
+		RETURN FALSE;
+END
+$$ LANGUAGE plpgsql;
+*/
+
 -- SELECT * FROM usp_AckerDaten(2,'1961-06-11','1962-07-26');
