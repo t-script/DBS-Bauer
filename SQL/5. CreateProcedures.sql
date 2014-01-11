@@ -140,56 +140,62 @@ CREATE OR REPLACE FUNCTION
 	RETURNS BOOLEAN
 	AS $$
 DECLARE
-
+	 _Tiermenge integer = (SELECT count(*) FROM TIER WHERE FK_STALL = _Stallid);
+	 _Stallgroesse integer = (SELECT Kapazitaet FROM STALL WHERE PK_STALL = _Stallid);
 BEGIN
-	INSERT INTO 
-		public.TIER(
-			FK_Stall, 
-			Name, 
-			Geburtsdatum, 
-			Anschaffungs_Datum, 
-			Gewicht
-		) 
-	VALUES
-		(
-			_Stallid,
-			_Tiername,
-			_Geburtsdatum,
-			_Anschaffungs_Datum,
-			_Gewicht
-		);
-		
-	INSERT INTO
-		public.TIER_ATTRIBUTE
-	VALUES
-		(
-			currval('tier_pk_tier_seq'),
+	IF(_Stallgroesse > _Tiermenge) THEN	
+		INSERT INTO 
+			public.TIER(
+				FK_Stall, 
+				Name, 
+				Geburtsdatum, 
+				Anschaffungs_Datum, 
+				Gewicht
+			) 
+		VALUES
 			(
-				SELECT 
-					PK_Attribute
-				FROM
-					public.Attribute
-				WHERE
-					Name = 'Tierart' AND 
-					Wert = _Tierart
-			)
-		);
+				_Stallid,
+				_Tiername,
+				_Geburtsdatum,
+				_Anschaffungs_Datum,
+				_Gewicht
+			);
+			
+		INSERT INTO
+			public.TIER_ATTRIBUTE
+		VALUES
+			(
+				currval('tier_pk_tier_seq'),
+				(
+					SELECT 
+						PK_Attribute
+					FROM
+						public.Attribute
+					WHERE
+						Name = 'Tierart' AND 
+						Wert = _Tierart
+				)
+			);
 
-	INSERT INTO 
-		public.FUTTERMENGE_PRO_TIER
-	VALUES
-		(
-			currval('tier_pk_tier_seq'),
-			_Futterid,
-			_Futtermenge,
-			_Datum
-		);
-	RETURN True;
+		INSERT INTO 
+			public.FUTTERMENGE_PRO_TIER
+		VALUES
+			(
+				currval('tier_pk_tier_seq'),
+				_Futterid,
+				_Futtermenge,
+				_Datum
+			);
+		RETURN True;
+	ELSE
+		RAISE EXCEPTION 'stall_exception'
+			USING HINT = 'Stall ist zu klein';
+	END IF;
 	
 EXCEPTION
 	WHEN not_null_violation THEN
 		RAISE NOTICE 'Tierart existiert nicht';
-		return False;	
+		return False;
 END
 $$ LANGUAGE plpgsql;
 
