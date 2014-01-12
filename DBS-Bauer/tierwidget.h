@@ -35,6 +35,8 @@ private slots:
 
 	void on_tierTot_clicked();
 
+	void on_comboStall_activated(const QString &arg1);
+
 private:
 	Ui::TierWidget *ui;
 	void TierTableChanged(const QModelIndex& index);

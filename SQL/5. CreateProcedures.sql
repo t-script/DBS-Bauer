@@ -285,9 +285,10 @@ COMMENT ON
 
 -- SELECT * FROM usp_AckerDaten(2,'1961-06-11','1962-07-26');
 
-CREATE OR REPLACE FUNCTION usp_UpdateTierStall(_stall int, _tier int)
+CREATE OR REPLACE FUNCTION usp_UpdateTierStall(_stallart text, _tier int)
 	RETURNS BOOLEAN AS $$
 DECLARE
+	_stall integer := (SELECT usp_KonvertiereStall(_stallart));
 	_capacity integer := (SELECT Kapazitaet FROM STALL WHERE Pk_Stall = _stall);
 	_animals integer := (SELECT COUNT(*) FROM TIER WHERE Fk_Stall = _stall GROUP BY Fk_Stall);
 BEGIN
@@ -821,3 +822,11 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION usp_KonvertiereStall(_stallart text)
+	RETURNS integer AS $$
+DECLARE
+	_result integer := (SELECT Pk_Stall FROM STALL WHERE Stallart = _stallart);
+BEGIN
+	RETURN _result;
+END
+$$ LANGUAGE plpgsql;

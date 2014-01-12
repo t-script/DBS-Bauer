@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QSqlResult>
 #include <QException>
 
 TierWidget::TierWidget(QWidget *parent) :
@@ -134,8 +135,13 @@ void TierWidget::SetupFutterTier(const QModelIndex &index)
 
 void TierWidget::on_comboStall_activated(int index)
 {
+	// do nothing
+}
+
+void TierWidget::on_comboStall_activated(const QString &arg1)
+{
 	QSqlQuery q;
-	if (!q.exec(QString("SELECT usp_UpdateTierStall(%1,%2);").arg(QString::number(index+1), QString::number(currentPk)))) {
+	if (!q.exec(QString("SELECT * FROM usp_UpdateTierStall('%1',%2);").arg(arg1, QString::number(currentPk)))) {
 		qDebug() << q.lastError();
 	}
 }
