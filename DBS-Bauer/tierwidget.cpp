@@ -82,8 +82,8 @@ void TierWidget::SetupStall(const QModelIndex &index)
 {
 	bool ok = false;
 	int fkStall = index.column() == 1 ?
-		index.data().toInt(&ok) :
-		(tiere->index(index.row(), 1)).data().toInt(&ok);
+				index.data().toInt(&ok) :
+				(tiere->index(index.row(), 1)).data().toInt(&ok);
 	QSqlTableModel stall;
 	stall.setTable("stall");
 	ui->comboStall->clear();
@@ -138,4 +138,19 @@ void TierWidget::on_comboStall_activated(int index)
 	if (!q.exec(QString("SELECT usp_UpdateTierStall(%1,%2);").arg(QString::number(index+1), QString::number(currentPk)))) {
 		qDebug() << q.lastError();
 	}
+}
+
+void TierWidget::on_tierNeu_clicked()
+{
+
+}
+
+void TierWidget::on_tierTot_clicked()
+{
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT usp_DeleteTier(%1) ;").arg(QString::number(currentPk)))) {
+		qDebug() << q.lastError();
+	}
+	tiere->select();
+
 }
