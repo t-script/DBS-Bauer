@@ -43,13 +43,13 @@ DO $$
 BEGIN
 -- Schweine
 	FOR i IN 1..1001 LOOP
-		INSERT INTO TIER(FK_Stall, Name, Geburtsdatum,Anschaffungs_Datum, Gewicht) VALUES(1, null, now(), now(), (i + 200) % 300);
+		INSERT INTO TIER(FK_Stall, Name, Geburtsdatum,Anschaffungsdatum, Gewicht) VALUES(1, null, now(), now(), (i + 200) % 300);
 		INSERT INTO TIER_ATTRIBUTE VALUES(currval('tier_pk_tier_seq'), 1);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(currval('tier_pk_tier_seq'), 2, 5);
 	END LOOP;
 -- Rinder
 	FOR i IN 1002..2002 LOOP
-		INSERT INTO TIER(FK_Stall, Name, Geburtsdatum,Anschaffungs_Datum, Gewicht) VALUES(2, null, now(), now(), (i + 300) % 500);
+		INSERT INTO TIER(FK_Stall, Name, Geburtsdatum,Anschaffungsdatum, Gewicht) VALUES(2, null, now(), now(), (i + 300) % 500);
 		INSERT INTO TIER_ATTRIBUTE VALUES(currval('tier_pk_tier_seq'), 2);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(currval('tier_pk_tier_seq'), 2, 3);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(currval('tier_pk_tier_seq'), 4, 3);
@@ -57,7 +57,7 @@ BEGIN
 	END LOOP;
 -- Hühner
 	FOR i IN 2003..3003 LOOP
-		INSERT INTO TIER(FK_Stall, Name, Geburtsdatum,Anschaffungs_Datum, Gewicht) VALUES(3, null, now(), now(), i % 3);
+		INSERT INTO TIER(FK_Stall, Name, Geburtsdatum,Anschaffungsdatum, Gewicht) VALUES(3, null, now(), now(), i % 3);
 		INSERT INTO TIER_ATTRIBUTE VALUES(currval('tier_pk_tier_seq'), 3);
 		INSERT INTO FUTTERMENGE_PRO_TIER VALUES(currval('tier_pk_tier_seq'), 3, 1.5);
 	END LOOP;

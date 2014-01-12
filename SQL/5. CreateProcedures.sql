@@ -17,7 +17,7 @@ RETURN QUERY
 		TIER.PK_Tier,
 		TIER.Geburtsdatum,
 		TIER.Gewicht,
-		(now() - TIER.Anschaffungs_Datum) AS Alter,
+		(now() - TIER.Anschaffungsdatum) AS Alter,
 		TIERARZTBESUCH.Datum,
 		TIERARZTBESUCH.Diagnose,
 		TIERARZTBESUCH.Medikamente
@@ -130,7 +130,7 @@ CREATE OR REPLACE FUNCTION
 		_Stallid integer, 
 		_Tiername text,
 		_Geburtsdatum date,
-		_Anschaffungs_Datum date,
+		_Anschaffungsdatum date,
 		_Gewicht double precision,
 		_Tierart text,
 		_Futterid integer,
@@ -149,7 +149,7 @@ BEGIN
 				FK_Stall, 
 				Name, 
 				Geburtsdatum, 
-				Anschaffungs_Datum, 
+				Anschaffungsdatum, 
 				Gewicht
 			) 
 		VALUES
@@ -157,7 +157,7 @@ BEGIN
 				_Stallid,
 				_Tiername,
 				_Geburtsdatum,
-				_Anschaffungs_Datum,
+				_Anschaffungsdatum,
 				_Gewicht
 			);
 			
@@ -204,7 +204,7 @@ COMMENT ON
 		_Stallid integer, 
 		_Tiername text, 
 		_Geburtsdatum date, 
-		_Anschaffungs_Datum date, 
+		_Anschaffungsdatum date, 
 		_Gewicht double precision, 
 		_Tierart text, 
 		_Futterid integer, 
@@ -361,4 +361,79 @@ BEGIN
 		Fk_Tier = _tier;
 END
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_TiereImStall(_stall integer)
+	RETURNS TABLE (
+		Pk_Tier integer,
+		Name text,
+		Geburtsdatum date,
+		Anschaffungsdatum date,
+		Gewicht double precision,
+		Tierart text
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT
+		TIER.Pk_Tier, TIER.Name, TIER.Geburtsdatum, TIER.Anschaffungsdatum, TIER.Gewicht, ATTRIBUTE.Wert
+	FROM
+		STALL
+	JOIN
+		TIER
+	ON
+		STALL.Pk_Stall = TIER.Fk_Stall
+	JOIN
+		TIER_ATTRIBUTE
+	ON
+		TIER.Pk_Tier = TIER_ATTRIBUTE.Fk_Tier
+	JOIN
+		ATTRIBUTE
+	ON
+		TIER_ATTRIBUTE.Fk_Attribute = ATTRIBUTE.Pk_Attribute
+	WHERE
+		STALL.Pk_Stall = _stall
+	AND
+		ATTRIBUTE.Name = 'Tierart';
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_Stallarbeiten(_stall integer) 
+	RETURNS TABLE(
+		PK_Angestellter integer,
+		Vorname text,
+		Nachname text,
+		FK_Stall integer,
+		VerrichteteArbeit text,
+		Datum date,
+		Dauer interval
+	)
+	AS $func$
+declare
+
+BEGIN
+
+RETURN QUERY
+	select
+		ANGESTELLTER.PK_Angestellter,
+		ANGESTELLTER.Vorname,
+		ANGESTELLTER.Nachname,
+		ANGESTELLTER_STALLARBEITEN.FK_Stall,
+		ANGESTELLTER_STALLARBEITEN.VerrichteteArbeit,
+		ANGESTELLTER_STALLARBEITEN.Datum,
+		ANGESTELLTER_STALLARBEITEN.Dauer
+	FROM
+		ANGESTELLTER
+	JOIN
+		ANGESTELLTER_STALLARBEITEN
+	ON
+		ANGESTELLTER_STALLARBEITEN.Fk_Angestellter = ANGESTELLTER.Pk_Angestellter
+	JOIN
+		STALL
+	ON
+		STALL.Pk_Stall = ANGESTELLTER_STALLARBEITEN.Fk_Stall
+	WHERE
+		STALL.Pk_Stall = _stall;
+end
+$func$ language plpgsql;
 

@@ -3,7 +3,7 @@
 		TIER.PK_Tier,
 		TIER.Name, 
 		TIER.Geburtsdatum, 
-		TIER.Anschaffungs_Datum, 
+		TIER.Anschaffungsdatum, 
 		TIER.Gewicht, 
 		(ATTRIBUTE.Wert) AS TIERART
 	FROM 
@@ -20,7 +20,7 @@ CREATE OR REPLACE VIEW "v_Kuehe" AS
 		TIER.PK_Tier,
 		TIER.Name, 
 		TIER.Geburtsdatum, 
-		TIER.Anschaffungs_Datum, 
+		TIER.Anschaffungsdatum, 
 		TIER.Gewicht, 
 		(ATTRIBUTE.Wert) AS TIERART
 	FROM 
@@ -37,7 +37,7 @@ CREATE OR REPLACE VIEW "v_Huehner" AS
 		TIER.PK_Tier,
 		TIER.Name, 
 		TIER.Geburtsdatum, 
-		TIER.Anschaffungs_Datum, 
+		TIER.Anschaffungsdatum, 
 		TIER.Gewicht, 
 		(ATTRIBUTE.Wert) AS TIERART
 	FROM 

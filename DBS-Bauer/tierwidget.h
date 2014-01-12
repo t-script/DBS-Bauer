@@ -15,7 +15,7 @@ class TierWidget : public QWidget
 	QSqlQueryModel *tierarzt;
 	QSqlQueryModel *attribute;
 	QSqlQueryModel *futter;
-	int _currentPk;
+	int currentPk;
 public:
 	explicit TierWidget(QWidget *parent = 0);
 	~TierWidget();
@@ -23,13 +23,13 @@ public:
 private slots:
 	void on_tableTier_clicked(const QModelIndex &index);
 
-    void on_tableAttribute_clicked(const QModelIndex &index);
+	void on_tableAttribute_clicked(const QModelIndex &index);
 
-    void on_tableArzt_clicked(const QModelIndex &index);
+	void on_tableArzt_clicked(const QModelIndex &index);
 
-    void on_tableFutterTier_clicked(const QModelIndex &index);
+	void on_tableFutterTier_clicked(const QModelIndex &index);
 
-    void on_comboStall_activated(int index);
+	void on_comboStall_activated(int index);
 
 private:
 	Ui::TierWidget *ui;
