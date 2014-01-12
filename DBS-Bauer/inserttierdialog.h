@@ -15,7 +15,13 @@ public:
 	explicit InsertTierDialog(QWidget *parent = 0);
 	~InsertTierDialog();
 
+private slots:
+	void on_buttonBox_accepted();
+
 private:
+	void SetupTierart();
+	void SetupFutter();
+
 	Ui::InsertTierDialog *ui;
 };
 

@@ -1,5 +1,6 @@
 #include "tierwidget.h"
 #include "ui_tierwidget.h"
+#include "inserttierdialog.h"
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
@@ -148,7 +149,9 @@ void TierWidget::on_comboStall_activated(const QString &arg1)
 
 void TierWidget::on_tierNeu_clicked()
 {
-
+	InsertTierDialog d;
+	d.setModal(true);
+	d.exec();
 }
 
 void TierWidget::on_tierTot_clicked()
