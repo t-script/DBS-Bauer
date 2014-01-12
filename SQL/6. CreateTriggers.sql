@@ -57,7 +57,22 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION
+	usp_CheckMaschine()
+	RETURNS TRIGGER
+	AS $$
 
+DECLARE
+	_Lagergroesse integer := (SELECT Kapazitaet FROM LAGER WHERE PK_LAGER = NEW.FK_Lager);
+	_MaschinenImLager integer := (SELECT count(*) FROM MASCHINE WHERE MASCHINE.FK_Lager = NEW.FK_Lager);
+BEGIN
+	IF(_Lagergroesse >= (_MaschinenImLager + 1)) THEN
+		RETURN NEW;
+	ELSE
+		RAISE EXCEPTION 'Lagerkapazität überschritten';
+	END IF;
+END
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER TR_LagerFutter
 	BEFORE INSERT OR UPDATE
@@ -80,3 +95,14 @@ CREATE TRIGGER TR_LagerDuenger
 --INSERT INTO FUTTER_BESTAND VALUES(1,1, 400);
 --INSERT INTO DUENGER_BESTAND VALUES(1,2, 1);
 --UPDATE DUENGER_BESTAND SET Bestand = 1000 WHERE FK_Duenger = 3;
+
+CREATE TRIGGER TR_LagerMaschine
+	BEFORE INSERT
+	ON Maschine
+	FOR EACH ROW
+	EXECUTE PROCEDURE usp_CheckMaschine();
+
+--INSERT INTO LAGER(lagerart, kapazitaet) values('garage', 1);
+--INSERT INTO MASCHINE(fk_lager,name) values(6,'testauto');
+
+	
