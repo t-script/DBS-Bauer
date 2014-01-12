@@ -12,10 +12,14 @@ class MaschineWidget;
 class MaschineWidget : public QWidget
 {
 	Q_OBJECT
-    QSqlTableModel *maschinen;
+	QSqlTableModel *maschinen;
+	QSqlQueryModel *chronik;
 public:
 	explicit MaschineWidget(QWidget *parent = 0);
 	~MaschineWidget();
+
+private slots:
+	void on_tableMaschine_clicked(const QModelIndex &index);
 
 private:
 	Ui::MaschineWidget *ui;

@@ -22,6 +22,9 @@ FutterWidget::FutterWidget(QWidget *parent) :
 	ui->tableFutter->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableFutter->setSelectionMode(QAbstractItemView::SingleSelection);
 	ui->tableFutter->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+	// PK verstecken
+	ui->tableFutter->hideColumn(0);
 }
 
 FutterWidget::~FutterWidget()

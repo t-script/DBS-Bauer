@@ -438,6 +438,67 @@ BEGIN
 end
 $func$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION usp_Restkapazitaet(_lager integer)
+	RETURNS integer AS $$
+DECLARE
+	_capacity bigint := (SELECT Kapazitaet FROM LAGER WHERE Pk_Lager = _lager);
+	_futter bigint := 0;
+	_saatgut bigint := 0;
+	_duenger bigint := 0;
+	_result bigint := 0;
+BEGIN
+	-- futter
+	SELECT
+		COALESCE(SUM(FUTTER_BESTAND.Bestand), 0)
+	INTO
+		_futter
+	FROM
+		LAGER
+	LEFT JOIN
+		FUTTER_BESTAND
+	ON
+		LAGER.Pk_Lager = FUTTER_BESTAND.Fk_Lager
+	WHERE
+		LAGER.Pk_Lager = _lager
+	GROUP BY
+		LAGER.Pk_Lager;
+	-- duenger	
+	SELECT
+		COALESCE(SUM(DUENGER_BESTAND.Bestand), 0)
+	INTO
+		_duenger
+	FROM
+		LAGER
+	LEFT JOIN
+		DUENGER_BESTAND
+	ON
+		LAGER.Pk_Lager = DUENGER_BESTAND.Fk_Lager
+	WHERE
+		LAGER.Pk_Lager = _lager
+	GROUP BY
+		LAGER.Pk_Lager;
+	-- saatgut
+	SELECT
+		COALESCE(SUM(SAATGUT_BESTAND.Bestand), 0)
+	INTO
+		_saatgut
+	FROM
+		LAGER
+	LEFT JOIN
+		SAATGUT_BESTAND
+	ON
+		LAGER.Pk_Lager = SAATGUT_BESTAND.Fk_Lager
+	WHERE
+		LAGER.Pk_Lager = _lager
+	GROUP BY
+		LAGER.Pk_Lager;
+	-- result
+	_result := _capacity - (_futter + _duenger + _saatgut);
+	-- return
+	RETURN _result;
+END
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION usp_FutterBestand(_futter integer)
 	RETURNS TABLE (
 		Pk_Lager integer,
@@ -459,16 +520,15 @@ BEGIN
 	FROM
 	(
 		SELECT
-			FUTTER_BESTAND.Fk_Lager AS Lager,
-			(LAGER.Kapazitaet - SUM(FUTTER_BESTAND.Bestand)) AS Restkapazitaet
+			usp_Restkapazitaet(LAGER.Pk_Lager) AS Restkapazitaet
 		FROM
 			LAGER
 		JOIN
 			FUTTER_BESTAND
 		ON
 			LAGER.Pk_Lager = FUTTER_BESTAND.Fk_Lager
-		GROUP BY
-			FUTTER_BESTAND.Fk_Lager, LAGER.Pk_Lager
+		WHERE
+			FUTTER_BESTAND.Fk_Futter = _futter
 	) A
 	JOIN
 		LAGER
@@ -484,6 +544,170 @@ BEGIN
 		FUTTER_BESTAND.Fk_Futter = FUTTER.Pk_Futter
 	WHERE
 		FUTTER_BESTAND.Fk_Futter = _futter AND A.Lager = FUTTER_BESTAND.Fk_Lager;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_MaschineChronik(_maschine integer)
+	RETURNS TABLE (
+		Pk_Angestellter integer,
+		Vorname text,
+		Nachname text,
+		Verwendungsdatum date,
+		Verwendungsdauer interval
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT
+		ANGESTELLTER.Pk_Angestellter,
+		ANGESTELLTER.Vorname,
+		ANGESTELLTER.Nachname,
+		MASCHINE_VERWENDUNG.Verwendungsdatum,
+		MASCHINE_VERWENDUNG.Dauer
+	FROM
+		ANGESTELLTER
+	JOIN
+		MASCHINE_VERWENDUNG
+	ON
+		ANGESTELLTER.Pk_Angestellter = MASCHINE_VERWENDUNG.Fk_Angestellter
+	JOIN
+		MASCHINE
+	ON
+		MASCHINE_VERWENDUNG.Fk_Maschine = MASCHINE.Pk_Maschine
+	WHERE
+		MASCHINE.Pk_Maschine = _maschine;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_DuengerBestand(_lager integer)
+	RETURNS TABLE (
+		Pk_Duenger integer,
+		Name text,
+		Preis double precision,
+		Bestand integer,
+		Restkapazitaet bigint
+	) AS $$
+DECLARE
+	_capacity bigint := (SELECT usp_Restkapazitaet(_lager));
+BEGIN
+	RETURN
+		QUERY
+	SELECT 
+		DUENGER.Pk_Duenger,
+		DUENGER.Name, 
+		DUENGER.Preis, 
+		DUENGER_BESTAND.Bestand,
+		_capacity
+	FROM
+		LAGER
+	JOIN
+		DUENGER_BESTAND
+	ON
+		LAGER.Pk_Lager = DUENGER_BESTAND.Fk_Lager
+	JOIN
+		DUENGER
+	ON
+		DUENGER_BESTAND.Fk_Duenger = DUENGER.Pk_Duenger
+	WHERE
+		DUENGER_BESTAND.Fk_Lager = _lager;
+END
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION usp_FutterLagerBestand(_lager integer)
+	RETURNS TABLE (
+		Pk_Futter integer,
+		Name text,
+		Preis double precision,
+		Bestand integer,
+		Restkapazitaet bigint
+	) AS $$
+DECLARE
+	_capacity bigint := (SELECT usp_Restkapazitaet(_lager));
+BEGIN
+	RETURN
+		QUERY
+	SELECT 
+		FUTTER.Pk_Futter,
+		FUTTER.Name, 
+		FUTTER.Preis, 
+		FUTTER_BESTAND.Bestand,
+		_capacity
+	FROM
+		LAGER
+	JOIN
+		FUTTER_BESTAND
+	ON
+		LAGER.Pk_Lager = FUTTER_BESTAND.Fk_Lager
+	JOIN
+		FUTTER
+	ON
+		FUTTER_BESTAND.Fk_Futter = FUTTER.Pk_Futter
+	WHERE
+		FUTTER_BESTAND.Fk_Lager = _lager;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_LagerMaschine(_lager integer)
+	RETURNS TABLE (
+		Pk_Maschine integer,
+		Typ text,
+		Name text,
+		Kosten double precision,
+		Anschaffungsdatum date,
+		Abschreibungsdatum date
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT
+		MASCHINE.Pk_Maschine,
+		MASCHINE.Typ,
+		MASCHINE.Name,
+		MASCHINE.Kosten,
+		MASCHINE.Anschaffungsdatum,
+		MASCHINE.Abschreibungsdatum
+	FROM
+		MASCHINE
+	WHERE
+		Fk_Lager = _lager;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_SaatgutBestand(_lager integer)
+	RETURNS TABLE (
+		Pk_Saatgut integer,
+		Name text,
+		Preis double precision,
+		Bestand integer,
+		Restkapazitaet bigint
+	) AS $$
+DECLARE
+	_capacity bigint := (SELECT usp_Restkapazitaet(_lager));
+BEGIN
+	RETURN
+		QUERY
+	SELECT 
+		SAATGUT.Pk_Saatgut,
+		SAATGUT.Name, 
+		SAATGUT.Preis, 
+		SAATGUT_BESTAND.Bestand,
+		_capacity
+	FROM
+		LAGER
+	JOIN
+		SAATGUT_BESTAND
+	ON
+		LAGER.Pk_Lager = SAATGUT_BESTAND.Fk_Lager
+	JOIN
+		SAATGUT
+	ON
+		SAATGUT_BESTAND.Fk_Saatgut = SAATGUT.Pk_Saatgut
+	WHERE
+		SAATGUT_BESTAND.Fk_Lager = _lager;
 END
 $$ LANGUAGE plpgsql;
 
