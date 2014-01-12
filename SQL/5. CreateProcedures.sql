@@ -141,7 +141,7 @@ CREATE OR REPLACE FUNCTION
 	AS $$
 DECLARE
 	 _Tiermenge integer = (SELECT count(*) FROM TIER WHERE FK_STALL = _Stallid);
-	 _Stallgroesse integer = (SELECT Kapazitaet FROM STALL WHERE PK_STALL = _Stallid);
+	 _Stallgroesse integer = (SELECT Kapazitaet FROM STALL WHERE PK_Stall = _Stallid);
 BEGIN
 	IF(_Stallgroesse > _Tiermenge) THEN	
 		INSERT INTO 
@@ -828,5 +828,20 @@ DECLARE
 	_result integer := (SELECT Pk_Stall FROM STALL WHERE Stallart = _stallart);
 BEGIN
 	RETURN _result;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_GetAttribut(_Name text)
+	RETURNS TABLE(Wert text)
+	AS $$
+DECLARE
+BEGIN
+	RETURN QUERY
+		SELECT
+			ATTRIBUTE.Wert
+		FROM
+			ATTRIBUTE
+		WHERE
+			ATTRIBUTE.Name = _Name;
 END
 $$ LANGUAGE plpgsql;

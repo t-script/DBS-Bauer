@@ -52,7 +52,7 @@ void InsertTierDialog::SetupTierart()
 
 	ui->tierart->clear();
 
-	if(!q.exec("SELECT Wert From ATTRIBUTE Where Name = 'Tierart'")) {
+	if(!q.exec("SELECT * FROM usp_GetAttribut('Tierart')")) {
 		qDebug() << q.lastError();
 	}
 
@@ -70,7 +70,7 @@ void InsertTierDialog::SetupFutter()
 
 	ui->futter->clear();
 
-	if(!q.exec("SELECT Name, PK_Futter FROM FUTTER ORDER BY PK_Futter")) {
+	if(!q.exec("SELECT * FROM \"v_FutterName\"")) {
 		qDebug() << q.lastError();
 	}
 
@@ -88,7 +88,7 @@ void InsertTierDialog::SetupStall()
 
 	ui->stall->clear();
 
-	if(!q.exec("SELECT Stallart, PK_Stall From Stall ORDER BY PK_Stall")) {
+	if(!q.exec("SELECT * FROM \"v_Stallart\"")) {
 		qDebug() << q.lastError();
 	}
 
