@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     angestellterwidget.cpp \
     bauerexception.cpp \
     login.cpp \
-    inserttierdialog.cpp
+    inserttierdialog.cpp \
+    insertstalldialog.cpp
 
 HEADERS  += MainWindow.h \
     stallwidget.h \
@@ -39,7 +40,8 @@ HEADERS  += MainWindow.h \
     angestellterwidget.h \
     bauerexception.h \
     login.h \
-    inserttierdialog.h
+    inserttierdialog.h \
+    insertstalldialog.h
 
 FORMS    += MainWindow.ui \
     stallwidget.ui \
@@ -52,6 +54,7 @@ FORMS    += MainWindow.ui \
     saatgutwidget.ui \
     angestellterwidget.ui \
     login.ui \
-    inserttierdialog.ui
+    inserttierdialog.ui \
+    insertstalldialog.ui
 
 unix: QMAKE_CXXFLAGS += -std=c++11

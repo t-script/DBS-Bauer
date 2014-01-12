@@ -22,6 +22,10 @@ public:
 private slots:
 	void on_tableStall_clicked(const QModelIndex &index);
 
+	void on_stalleinfuegen_clicked();
+
+	void on_stalltot_clicked();
+
 private:
 	Ui::StallWidget *ui;
 

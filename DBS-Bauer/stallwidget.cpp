@@ -1,9 +1,11 @@
 #include "stallwidget.h"
 #include "ui_stallwidget.h"
+#include "insertstalldialog.h"
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QMessageBox>
 
 StallWidget::StallWidget(QWidget *parent) :
 	QWidget(parent),
@@ -73,4 +75,39 @@ void StallWidget::SetupArbeiten(const QModelIndex &index)
 	arbeiten->setQuery(q);
 	ui->tableStallarbeiten->setModel(arbeiten);
 	ui->tableStallarbeiten->hideColumn(0);
+}
+
+void StallWidget::on_stalleinfuegen_clicked()
+{
+	InsertStallDialog d;
+	d.setModal(true);
+	d.exec();
+	staelle->select();
+}
+
+void StallWidget::on_stalltot_clicked()
+{
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT usp_DeleteStall(%1, 'f') ;").arg(QString::number(currentPk)))) {
+
+
+		QMessageBox m;
+		m.setText("Wenn sie fortfahren werden alle Tiere und Stallarbeiten gelöscht die mit diesem Stall in verbindung stehen.");
+		m.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		m.setIcon(QMessageBox::Warning);
+		m.setDefaultButton(QMessageBox::No);
+		int ret = m.exec();
+		switch (ret) {
+		case QMessageBox::Yes:
+
+			if (!q.exec(QString("SELECT usp_DeleteStall(%1, 't') ;").arg(QString::number(currentPk)))) {
+				qDebug() << q.lastError(); //need more indent
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	staelle->select();
+
 }

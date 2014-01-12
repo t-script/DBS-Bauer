@@ -224,7 +224,7 @@ BEGIN
 	DELETE FROM TIER_ATTRIBUTE WHERE FK_TIER = _id;
 	DELETE FROM TIERARZTBESUCH WHERE FK_TIER = _id;
 	DELETE FROM FUTTERMENGE_PRO_TIER WHERE FK_TIER = _id;
-	DELETE FROM TIER WHERE PK_TIER = _id;
+	DELETE FROM TIER WHERE PK_Tier = _id;
 END
 $$ LANGUAGE plpgsql;
 
@@ -843,5 +843,51 @@ BEGIN
 			ATTRIBUTE
 		WHERE
 			ATTRIBUTE.Name = _Name;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION 
+	usp_StallEinfuegen(
+		_Stallart text,
+		_Kapazitaet text, 
+		_Standort text
+	)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	INSERT INTO
+		public.STALL(
+			Stallart,
+			Kapazitaet,
+			Standort
+		)
+	VALUES
+		(
+			_Stallart,
+			_Kapazitaet,
+			_Standort
+		);
+			
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_DeleteStall(_id integer, _NUKE boolean)
+	RETURNS VOID
+	AS $$
+DECLARE
+	I integer;
+BEGIN
+	if(_NUKE) THEN
+		FOR I IN SELECT PK_Tier FROM TIER WHERE FK_Stall = _id LOOP
+			PERFORM usp_DeleteTier(I);
+		END LOOP;
+		DELETE FROM ANGESTELLTER_STALLARBEITEN WHERE FK_Stall = _id;
+		DELETE FROM STALL WHERE PK_STALL = _id;
+	ELSE
+		DELETE FROM STALL WHERE PK_STALL = _id;
+	END IF;
 END
 $$ LANGUAGE plpgsql;

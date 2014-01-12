@@ -4,9 +4,6 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
-#include <QSqlRecord>
-#include <QException>
-#include <QSqlTableModel>
 
 InsertTierDialog::InsertTierDialog(QWidget *parent) :
 	QDialog(parent),
