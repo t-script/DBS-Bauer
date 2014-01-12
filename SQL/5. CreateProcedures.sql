@@ -705,3 +705,60 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION usp_AckerDaten(_acker integer)
+	RETURNS TABLE (
+		Duenger text,
+		Saatgut text,
+		Datum date,
+		Messwert double precision
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT
+		DUENGER.Name, SAATGUT.Name, ACKERDATEN.Datum, ACKERDATEN.Messwert
+	FROM
+		ACKERDATEN
+	JOIN
+		DUENGER
+	ON
+		ACKERDATEN.Fk_Duenger = DUENGER.Pk_Duenger
+	JOIN
+		SAATGUT
+	ON
+		ACKERDATEN.Fk_Saatgut = SAATGUT.Pk_Saatgut
+	WHERE
+		ACKERDATEN.Fk_Acker = _acker;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_DuengerLagerBestand(_duenger integer)
+	RETURNS TABLE (
+		PK_Lager integer,
+		Lagerart text,
+		Kapazitaet integer,
+		Bestand integer,
+		Restkapazitaet bigint
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT
+		LAGER.PK_Lager, 
+		LAGER.Lagerart, 
+		LAGER.Kapazitaet, 
+		DUENGER_BESTAND.Bestand,
+		(SELECT usp_Restkapazitaet(LAGER.Pk_Lager))
+	FROM
+		LAGER
+	JOIN
+		DUENGER_BESTAND
+	ON
+		LAGER.Pk_Lager = DUENGER_BESTAND.Fk_Lager
+	WHERE
+		DUENGER_BESTAND.Fk_Duenger = _duenger;
+END
+$$ LANGUAGE plpgsql;
+

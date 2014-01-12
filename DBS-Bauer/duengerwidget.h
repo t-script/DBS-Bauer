@@ -11,10 +11,14 @@ class DuengerWidget;
 class DuengerWidget : public QWidget
 {
 	Q_OBJECT
-    QSqlTableModel *dunger;
+	QSqlTableModel *dunger;
+	QSqlQueryModel *bestand;
 public:
 	explicit DuengerWidget(QWidget *parent = 0);
 	~DuengerWidget();
+
+private slots:
+	void on_tableDunger_clicked(const QModelIndex &index);
 
 private:
 	Ui::DuengerWidget *ui;
