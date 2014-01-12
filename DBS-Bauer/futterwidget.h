@@ -21,7 +21,12 @@ public:
 private slots:
 	void on_tableFutter_clicked(const QModelIndex &index);
 
+	void on_futtereinfuegen_clicked();
+
+	void on_futtertot_clicked();
+
 private:
+	int currentPk;
 	Ui::FutterWidget *ui;
 };
 

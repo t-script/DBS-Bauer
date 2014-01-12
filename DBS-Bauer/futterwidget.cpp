@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
+#include <QMessageBox>
 
 FutterWidget::FutterWidget(QWidget *parent) :
 	QWidget(parent),
@@ -37,7 +38,7 @@ FutterWidget::~FutterWidget()
 void FutterWidget::on_tableFutter_clicked(const QModelIndex &index)
 {
 	bool ok = false;
-	int currentPk = (futter->index(index.row(), 0)).data().toInt(&ok);
+	currentPk = (futter->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
 		qDebug() << futter->lastError();
@@ -50,4 +51,35 @@ void FutterWidget::on_tableFutter_clicked(const QModelIndex &index)
 		ui->tableFutterBestand->setModel(bestand);
 		ui->tableFutterBestand->hideColumn(0);
 	}
+}
+
+void FutterWidget::on_futtereinfuegen_clicked()
+{
+
+}
+
+void FutterWidget::on_futtertot_clicked()
+{
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT usp_DeleteFutter(%1, 'f') ;").arg(QString::number(currentPk)))) {
+
+
+		QMessageBox m;
+		m.setText("Wenn sie fortfahren werden alle Einträge gelöscht die mit diesem Futter in verbindung stehen.");
+		m.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		m.setIcon(QMessageBox::Warning);
+		m.setDefaultButton(QMessageBox::No);
+		int ret = m.exec();
+		switch (ret) {
+		case QMessageBox::Yes:
+
+			if (!q.exec(QString("SELECT usp_DeleteFutter(%1, 't') ;").arg(QString::number(currentPk)))) {
+				qDebug() << q.lastError(); //need more indent
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	futter->select();
 }

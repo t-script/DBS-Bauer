@@ -15,14 +15,34 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label_8">
-     <property name="text">
-      <string>Übersicht</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Übersicht:</string>
      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QTableView" name="tableFutter"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="futtereinfuegen">
+          <property name="text">
+           <string>Futter einfügen</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="futtertot">
+          <property name="text">
+           <string>Futter löschen</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QTableView" name="tableFutter"/>
    </item>
    <item>
     <widget class="QLabel" name="label_10">
