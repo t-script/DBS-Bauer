@@ -21,6 +21,7 @@ private slots:
 private:
 	void SetupTierart();
 	void SetupFutter();
+	void SetupStall();
 
 	Ui::InsertTierDialog *ui;
 };

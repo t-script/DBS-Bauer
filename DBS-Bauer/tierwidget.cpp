@@ -152,6 +152,7 @@ void TierWidget::on_tierNeu_clicked()
 	InsertTierDialog d;
 	d.setModal(true);
 	d.exec();
+	tiere->select();
 }
 
 void TierWidget::on_tierTot_clicked()
