@@ -439,7 +439,7 @@ end
 $func$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION usp_Restkapazitaet(_lager integer)
-	RETURNS integer AS $$
+	RETURNS bigint AS $$
 DECLARE
 	_capacity bigint := (SELECT Kapazitaet FROM LAGER WHERE Pk_Lager = _lager);
 	_futter bigint := 0;
@@ -513,13 +513,17 @@ BEGIN
 		QUERY
 	SELECT 
 		A.Lager,
-		LAGER.Lagerart, 
-		LAGER.Kapazitaet, 
-		FUTTER_BESTAND.Bestand,
+		A.Lagerart, 
+		A.Kapazitaet, 
+		A.Bestand,
 		A.Restkapazitaet
 	FROM
 	(
 		SELECT
+			LAGER.Pk_Lager AS Lager,
+			LAGER.Lagerart AS Lagerart,
+			LAGER.Kapazitaet AS Kapazitaet,
+			FUTTER_BESTAND.Bestand AS Bestand,
 			usp_Restkapazitaet(LAGER.Pk_Lager) AS Restkapazitaet
 		FROM
 			LAGER
@@ -527,23 +531,13 @@ BEGIN
 			FUTTER_BESTAND
 		ON
 			LAGER.Pk_Lager = FUTTER_BESTAND.Fk_Lager
+		JOIN
+			FUTTER
+		ON
+			FUTTER_BESTAND.Fk_Futter = FUTTER.Pk_Futter
 		WHERE
-			FUTTER_BESTAND.Fk_Futter = _futter
-	) A
-	JOIN
-		LAGER
-	ON
-		A.Lager = LAGER.Pk_Lager
-	JOIN
-		FUTTER_BESTAND
-	ON
-		LAGER.Pk_Lager = FUTTER_BESTAND.Fk_Lager
-	JOIN
-		FUTTER
-	ON
-		FUTTER_BESTAND.Fk_Futter = FUTTER.Pk_Futter
-	WHERE
-		FUTTER_BESTAND.Fk_Futter = _futter AND A.Lager = FUTTER_BESTAND.Fk_Lager;
+			FUTTER_BESTAND.Fk_Futter = _futter AND LAGER.Pk_Lager = FUTTER_BESTAND.Fk_Lager
+	) A;
 END
 $$ LANGUAGE plpgsql;
 
