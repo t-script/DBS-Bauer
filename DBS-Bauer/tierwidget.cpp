@@ -15,6 +15,7 @@ TierWidget::TierWidget(QWidget *parent) :
 	tiere = new QSqlTableModel(ui->tableTier);
 	tierarzt = new QSqlQueryModel(ui->tableArzt);
 	attribute = new QSqlQueryModel(ui->tableAttribute);
+	futter = new QSqlQueryModel(ui->tableFutterTier);
 	tiere->setTable("tier");
 	if(tiere->select() != true) {
 		qDebug() << tiere->lastError();
@@ -36,6 +37,7 @@ TierWidget::~TierWidget()
 	delete tiere;
 	delete tierarzt;
 	delete attribute;
+	delete futter;
 	delete ui;
 }
 
@@ -122,23 +124,13 @@ void TierWidget::SetupTierarzt(const QModelIndex &index)
 
 void TierWidget::SetupFutterTier(const QModelIndex &index)
 {
-}
-
-void TierWidget::on_comboStall_currentIndexChanged(int index)
-{
-	//int fkStall = index + 1;
-	/*
-	QSqlTableModel stall;
-	stall.setTable("stall");
-
-	if (!stall.select()) {
-		qDebug() << stall.lastError();
-	} else if (stall.query().exec("update tier set stall="+QString::number(fkStall)+" where pk_tier="+QString::number(_currentPk)+";")) {
-		qDebug() << stall.lastError();
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT * FROM usp_TierFutter(%1)").arg(_currentPk))) {
+		qDebug() << q.lastError();
 	}
-	*/
-	//qDebug() << "PK: " << _currentPk;
-	//qDebug() << "FK: " << fkStall;
+	futter->setQuery(q);
+	ui->tableFutterTier->setModel(futter);
+	ui->tableFutterTier->hideColumn(0);
 }
 
 void TierWidget::on_comboStall_activated(int index)

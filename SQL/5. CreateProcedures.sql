@@ -344,3 +344,21 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION usp_TierFutter(_tier integer)
+	RETURNS TABLE (
+		Pk_Futter integer,
+		FutterMenge double precision
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT
+		Fk_Futter, Menge
+	FROM
+		FUTTERMENGE_PRO_TIER
+	WHERE
+		Fk_Tier = _tier;
+END
+$$ LANGUAGE plpgsql;
+
