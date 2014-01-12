@@ -11,11 +11,15 @@ class AngestellterWidget;
 class AngestellterWidget : public QWidget
 {
 	Q_OBJECT
-    QSqlTableModel *angestellten;
+	QSqlTableModel *angestellten;
+	QSqlQueryModel *arbeiten;
 
 public:
 	explicit AngestellterWidget(QWidget *parent = 0);
 	~AngestellterWidget();
+
+private slots:
+	void on_tableAngestellter_clicked(const QModelIndex &index);
 
 private:
 	Ui::AngestellterWidget *ui;

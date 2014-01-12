@@ -15,7 +15,7 @@ AckerWidget::AckerWidget(QWidget *parent) :
 	aecker->setTable("acker");
 	daten = new QSqlQueryModel(ui->tableAckerDaten);
 
-	if(aecker->select() != true) {
+	if(!aecker->select()) {
 		qDebug() << aecker->lastError();
 	}
 

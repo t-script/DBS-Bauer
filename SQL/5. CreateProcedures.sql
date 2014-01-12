@@ -763,3 +763,61 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION usp_SaatgutLagerBestand(_saatgut integer)
+	RETURNS TABLE (
+		PK_Lager integer,
+		Lagerart text,
+		Kapazitaet integer,
+		Bestand integer,
+		Restkapazitaet bigint
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT
+		LAGER.PK_Lager, 
+		LAGER.Lagerart, 
+		LAGER.Kapazitaet, 
+		SAATGUT_BESTAND.Bestand,
+		(SELECT usp_Restkapazitaet(LAGER.Pk_Lager))
+	FROM
+		LAGER
+	JOIN
+		SAATGUT_BESTAND
+	ON
+		LAGER.Pk_Lager = SAATGUT_BESTAND.Fk_Lager
+	WHERE
+		SAATGUT_BESTAND.Fk_Saatgut = _saatgut;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_AngestellterArbeiten(_angestellter integer)
+	RETURNS TABLE (
+		Pk_Stall integer,
+		Stallart text,
+		Arbeit text,
+		Datum date,
+		Dauer interval
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT
+		STALL.Pk_Stall,
+		STALL.Stallart,
+		ANGESTELLTER_STALLARBEITEN.Verrichtetearbeit,
+		ANGESTELLTER_STALLARBEITEN.Datum,
+		ANGESTELLTER_STALLARBEITEN.Dauer
+	FROM
+		STALL
+	JOIN
+		ANGESTELLTER_STALLARBEITEN
+	ON
+		STALL.Pk_Stall = ANGESTELLTER_STALLARBEITEN.Fk_Stall
+	WHERE
+		ANGESTELLTER_STALLARBEITEN.Fk_Angestellter = _angestellter;
+END
+$$ LANGUAGE plpgsql;
+

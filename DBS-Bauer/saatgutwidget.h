@@ -11,10 +11,14 @@ class SaatgutWidget;
 class SaatgutWidget : public QWidget
 {
 	Q_OBJECT
-    QSqlTableModel *saatgutt;
+	QSqlTableModel *saatgut;
+	QSqlQueryModel *bestand;
 public:
 	explicit SaatgutWidget(QWidget *parent = 0);
 	~SaatgutWidget();
+
+private slots:
+	void on_tableSaagut_clicked(const QModelIndex &index);
 
 private:
 	Ui::SaatgutWidget *ui;

@@ -15,7 +15,7 @@ DuengerWidget::DuengerWidget(QWidget *parent) :
 	dunger = new QSqlTableModel(ui->tableDunger);
 	dunger->setTable("duenger");
 
-	if(dunger->select() != true) {
+	if(!dunger->select()) {
 		qDebug() << dunger->lastError();
 	}
 
