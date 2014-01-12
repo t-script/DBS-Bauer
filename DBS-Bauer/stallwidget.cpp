@@ -30,15 +30,15 @@ StallWidget::StallWidget(QWidget *parent) :
 StallWidget::~StallWidget()
 {
 	delete staelle;
+	delete tiere;
+	delete arbeiten;
 	delete ui;
 }
 
 void StallWidget::on_tableStall_clicked(const QModelIndex &index)
 {
 	bool ok = false;
-	currentPk = index.column() == 0 ?
-		index.data().toInt() :
-		(staelle->index(index.row(), 0)).data().toInt(&ok);
+	currentPk = (staelle->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
 		qDebug() << staelle->lastError();

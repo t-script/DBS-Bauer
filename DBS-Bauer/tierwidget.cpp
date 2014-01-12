@@ -49,9 +49,7 @@ void TierWidget::on_tableTier_clicked(const QModelIndex &index)
 void TierWidget::TierTableChanged(const QModelIndex &index)
 {
 	bool ok = false;
-	currentPk = index.column() == 0 ?
-		index.data().toInt() :
-		(tiere->index(index.row(), 0)).data().toInt(&ok);
+	currentPk = (tiere->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
 		qDebug() << tiere->lastError();

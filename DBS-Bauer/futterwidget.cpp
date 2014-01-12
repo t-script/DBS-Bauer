@@ -3,26 +3,48 @@
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
+#include <QSqlQueryModel>
+#include <QSqlQuery>
 
 FutterWidget::FutterWidget(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::FutterWidget)
 {
 	ui->setupUi(this);
-    futterr = new QSqlTableModel(ui->tableFutter);
-    futterr->setTable("futter");
-    if(futterr->select() != true)
-    {
-        qDebug() << futterr->lastError();
-    }
-    ui->tableFutter->setModel(futterr);
-    ui->tableFutter->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableFutter->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->tableFutter->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	futter = new QSqlTableModel(ui->tableFutter);
+	bestand = new QSqlQueryModel(ui->tableFutterBestand);
+	futter->setTable("futter");
+	if(!futter->select())
+	{
+		qDebug() << futter->lastError();
+	}
+	ui->tableFutter->setModel(futter);
+	ui->tableFutter->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->tableFutter->setSelectionMode(QAbstractItemView::SingleSelection);
+	ui->tableFutter->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 FutterWidget::~FutterWidget()
 {
-    delete futterr;
+	delete bestand;
+	delete futter;
 	delete ui;
+}
+
+void FutterWidget::on_tableFutter_clicked(const QModelIndex &index)
+{
+	bool ok = false;
+	int currentPk = (futter->index(index.row(), 0)).data().toInt(&ok);
+
+	if (currentPk <= 0 || !ok) {
+		qDebug() << futter->lastError();
+	} else {
+		QSqlQuery q;
+		if (!q.exec(QString("SELECT * FROM usp_FutterBestand(%1)").arg(currentPk))) {
+			qDebug() << q.lastError();
+		}
+		bestand->setQuery(q);
+		ui->tableFutterBestand->setModel(bestand);
+		ui->tableFutterBestand->hideColumn(0);
+	}
 }

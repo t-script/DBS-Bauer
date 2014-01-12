@@ -413,8 +413,9 @@ declare
 
 BEGIN
 
-RETURN QUERY
-	select
+	RETURN
+		QUERY
+	SELECT
 		ANGESTELLTER.PK_Angestellter,
 		ANGESTELLTER.Vorname,
 		ANGESTELLTER.Nachname,
@@ -436,4 +437,53 @@ RETURN QUERY
 		STALL.Pk_Stall = _stall;
 end
 $func$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION usp_FutterBestand(_futter integer)
+	RETURNS TABLE (
+		Pk_Lager integer,
+		Lagerart text,
+		Kapazitaet integer,
+		Bestand integer,
+		Restkapazitaet bigint
+	) AS $$
+DECLARE
+BEGIN
+	RETURN
+		QUERY
+	SELECT 
+		A.Lager,
+		LAGER.Lagerart, 
+		LAGER.Kapazitaet, 
+		FUTTER_BESTAND.Bestand,
+		A.Restkapazitaet
+	FROM
+	(
+		SELECT
+			FUTTER_BESTAND.Fk_Lager AS Lager,
+			(LAGER.Kapazitaet - SUM(FUTTER_BESTAND.Bestand)) AS Restkapazitaet
+		FROM
+			LAGER
+		JOIN
+			FUTTER_BESTAND
+		ON
+			LAGER.Pk_Lager = FUTTER_BESTAND.Fk_Lager
+		GROUP BY
+			FUTTER_BESTAND.Fk_Lager, LAGER.Pk_Lager
+	) A
+	JOIN
+		LAGER
+	ON
+		A.Lager = LAGER.Pk_Lager
+	JOIN
+		FUTTER_BESTAND
+	ON
+		LAGER.Pk_Lager = FUTTER_BESTAND.Fk_Lager
+	JOIN
+		FUTTER
+	ON
+		FUTTER_BESTAND.Fk_Futter = FUTTER.Pk_Futter
+	WHERE
+		FUTTER_BESTAND.Fk_Futter = _futter AND A.Lager = FUTTER_BESTAND.Fk_Lager;
+END
+$$ LANGUAGE plpgsql;
 
