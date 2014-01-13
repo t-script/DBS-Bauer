@@ -10,7 +10,7 @@ login::login(QWidget *parent) :
 	ui(new Ui::login)
 {
 	ui->setupUi(this);
-	setWindowFlags(Qt::FramelessWindowHint);
+	//setWindowFlags(Qt::FramelessWindowHint);
 	user = pass = "";
 }
 
