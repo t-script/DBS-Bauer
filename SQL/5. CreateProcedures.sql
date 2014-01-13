@@ -988,3 +988,17 @@ BEGIN
 		VALUES (_Lagerart, _Kapazitaet);
 END
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_DeleteAcker(_id integer, _NUKE boolean)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	IF(_NUKE) THEN
+		DELETE FROM ACKERDATEN WHERE FK_Acker = _id;
+	END IF;
+	DELETE FROM ACKER WHERE PK_Acker = _id;
+END
+$$ LANGUAGE plpgsql;

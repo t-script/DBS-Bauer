@@ -20,7 +20,12 @@ public:
 private slots:
 	void on_tableAcker_clicked(const QModelIndex &index);
 
+	void on_AckerNeu_clicked();
+
+	void on_AckerTot_clicked();
+
 private:
+	int currentPk;
 	Ui::AckerWidget *ui;
 };
 
