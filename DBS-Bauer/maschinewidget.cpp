@@ -1,10 +1,12 @@
 #include "maschinewidget.h"
 #include "ui_maschinewidget.h"
+#include "insertmaschinedialog.h"
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
+#include <QMessageBox>
 
 MaschineWidget::MaschineWidget(QWidget *parent) :
 	QWidget(parent),
@@ -38,7 +40,7 @@ MaschineWidget::~MaschineWidget()
 void MaschineWidget::on_tableMaschine_clicked(const QModelIndex &index)
 {
 	bool ok = false;
-	int currentPk = (maschinen->index(index.row(), 0)).data().toInt(&ok);
+	currentPk = (maschinen->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
 		qDebug() << maschinen->lastError();
@@ -51,4 +53,38 @@ void MaschineWidget::on_tableMaschine_clicked(const QModelIndex &index)
 		ui->tableVerwendung->setModel(chronik);
 		ui->tableVerwendung->hideColumn(0);
 	}
+}
+
+void MaschineWidget::on_MaschineEinfuegen_clicked()
+{
+	InsertMaschineDialog d;
+	d.setModal(true);
+	d.exec();
+	maschinen->select();
+}
+
+void MaschineWidget::on_MaschineTot_clicked()
+{
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT usp_DeleteMaschine(%1, 'f') ;").arg(QString::number(currentPk)))) {
+
+
+		QMessageBox m;
+		m.setText("Wenn sie fortfahren werden alle Einträge gelöscht die mit dieser Maschine in verbindung stehen.");
+		m.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		m.setIcon(QMessageBox::Warning);
+		m.setDefaultButton(QMessageBox::No);
+		int ret = m.exec();
+		switch (ret) {
+		case QMessageBox::Yes:
+
+			if (!q.exec(QString("SELECT usp_DeleteMaschine(%1, 't') ;").arg(QString::number(currentPk)))) {
+				qDebug() << q.lastError(); //need more indent
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	maschinen->select();
 }

@@ -917,3 +917,37 @@ BEGIN
 	DELETE FROM FUTTER WHERE PK_Futter = _id;
 END
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_MaschineEinfuegen(
+		_Lager integer,
+		_Preis double precision,
+		_Typ text,
+		_Name text,
+		_Anschaffungsdatum date,
+		_Abschreibungsdatum date
+	)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	INSERT INTO MASCHINE(FK_Lager, Kosten, Anschaffungsdatum, Abschreibungsdatum, Typ, Name) 
+		VALUES (_Lager, _Preis,  _Anschaffungsdatum::date, _Abschreibungsdatum::date, _Typ, _Name);
+END
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION
+	usp_DeleteMaschine(_id integer, _NUKE boolean)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	IF(_NUKE) THEN
+		DELETE FROM MASCHINE_VERWENDUNG WHERE FK_Maschine = _id;
+	END IF;
+	DELETE FROM MASCHINE WHERE PK_Maschine = _id;
+END
+$$ LANGUAGE plpgsql;

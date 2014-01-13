@@ -21,7 +21,12 @@ public:
 private slots:
 	void on_tableMaschine_clicked(const QModelIndex &index);
 
+	void on_MaschineEinfuegen_clicked();
+
+	void on_MaschineTot_clicked();
+
 private:
+	int currentPk;
 	Ui::MaschineWidget *ui;
 };
 
