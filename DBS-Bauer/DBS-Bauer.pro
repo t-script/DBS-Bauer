@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     insertmaschinedialog.cpp \
     insertlagerdialog.cpp \
     insertackerdialog.cpp \
-    insertduengerdialog.cpp
+    insertduengerdialog.cpp \
+    insertsaatgutdialog.cpp
 
 HEADERS  += MainWindow.h \
     stallwidget.h \
@@ -51,7 +52,8 @@ HEADERS  += MainWindow.h \
     insertmaschinedialog.h \
     insertlagerdialog.h \
     insertackerdialog.h \
-    insertduengerdialog.h
+    insertduengerdialog.h \
+    insertsaatgutdialog.h
 
 FORMS    += MainWindow.ui \
     stallwidget.ui \
@@ -70,6 +72,7 @@ FORMS    += MainWindow.ui \
     insertmaschinedialog.ui \
     insertlagerdialog.ui \
     insertackerdialog.ui \
-    insertduengerdialog.ui
+    insertduengerdialog.ui \
+    insertsaatgutdialog.ui
 
 unix: QMAKE_CXXFLAGS += -std=c++11

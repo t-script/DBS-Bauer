@@ -20,7 +20,12 @@ public:
 private slots:
 	void on_tableSaagut_clicked(const QModelIndex &index);
 
+	void on_SaatgutNeu_clicked();
+
+	void on_SaatgutTot_clicked();
+
 private:
+	int currentPk;
 	Ui::SaatgutWidget *ui;
 };
 

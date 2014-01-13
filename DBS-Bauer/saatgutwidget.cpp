@@ -1,10 +1,12 @@
 #include "saatgutwidget.h"
 #include "ui_saatgutwidget.h"
+#include "insertsaatgutdialog.h"
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
+#include <QMessageBox>
 
 SaatgutWidget::SaatgutWidget(QWidget *parent) :
 	QWidget(parent),
@@ -38,7 +40,7 @@ SaatgutWidget::~SaatgutWidget()
 void SaatgutWidget::on_tableSaagut_clicked(const QModelIndex &index)
 {
 	bool ok = false;
-	int currentPk = (saatgut->index(index.row(), 0)).data().toInt(&ok);
+	currentPk = (saatgut->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
 		qDebug() << saatgut->lastError();
@@ -51,4 +53,41 @@ void SaatgutWidget::on_tableSaagut_clicked(const QModelIndex &index)
 		ui->tableSaatgutbestand_2->setModel(bestand);
 		ui->tableSaatgutbestand_2->hideColumn(0);
 	}
+}
+
+void SaatgutWidget::on_SaatgutNeu_clicked()
+{
+	InsertSaatgutDialog d;
+	d.setModal(true);
+	d.exec();
+	saatgut->select();
+
+}
+
+void SaatgutWidget::on_SaatgutTot_clicked()
+{
+	QSqlQuery q;
+	q.prepare("SELECT usp_DeleteSaatgut(?, 'f');");
+	q.bindValue(0,currentPk);
+	if (!q.exec()) {
+		QMessageBox m;
+		m.setText("Wenn sie fortfahren werden alle Einträge gelöscht die mit diesem Saatgut in verbindung stehen.");
+		m.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		m.setIcon(QMessageBox::Warning);
+		m.setDefaultButton(QMessageBox::No);
+		int ret = m.exec();
+		switch (ret) {
+		case QMessageBox::Yes:
+			q.clear();
+			q.prepare("SELECT usp_DeleteSaatgut(?, 't');");
+			q.bindValue(0,currentPk);
+			if (!q.exec()) {
+				qDebug() << q.lastError(); //need more indent
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	saatgut->select();
 }

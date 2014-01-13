@@ -1039,7 +1039,36 @@ DECLARE
 BEGIN
 	INSERT INTO DUENGER(Name,Preis)
 		VALUES(_Name,_Preis);
-	INSERT INTO DUENGER_BESTAND(FK_Lager, Bestand)
-		VALUES(_Lager,_Bestand);
+	INSERT INTO DUENGER_BESTAND(FK_Duenger,FK_Lager, Bestand)
+		VALUES(currval('duenger_pk_duenger_seq'),_Lager,_Bestand);
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_DeleteSaatgut(_id integer, _NUKE boolean)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	IF(_NUKE) THEN
+		DELETE FROM ACKERDATEN WHERE FK_Saatgut = _id;
+		DELETE FROM SAATGUT_BESTAND WHERE FK_Saatgut = _id;
+	END IF;
+	DELETE FROM SAATGUT WHERE PK_Saatgut = _id;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_SaatgutEinfuegen(_Name text, _Preis double precision, _Lager integer, _Bestand integer)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	INSERT INTO SAATGUT(Name,Preis)
+		VALUES(_Name,_Preis);
+	INSERT INTO SAATGUT_BESTAND(FK_Saatgut,FK_Lager, Bestand)
+		VALUES(currval('saatgut_pk_saatgut_seq'),_Lager,_Bestand);
 END
 $$ LANGUAGE plpgsql;

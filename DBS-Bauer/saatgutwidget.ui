@@ -15,14 +15,34 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label_16">
-     <property name="text">
-      <string>Übersicht</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Übersicht:</string>
      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QTableView" name="tableSaagut"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="SaatgutNeu">
+          <property name="text">
+           <string>Neues Saatgut</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="SaatgutTot">
+          <property name="text">
+           <string>Saatgut löschen</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QTableView" name="tableSaagut"/>
    </item>
    <item>
     <widget class="QLabel" name="label_24">
