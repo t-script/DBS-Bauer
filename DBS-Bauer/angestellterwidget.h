@@ -21,7 +21,12 @@ public:
 private slots:
 	void on_tableAngestellter_clicked(const QModelIndex &index);
 
+	void on_AngestellterNeu_clicked();
+
+	void on_AngestellterTot_clicked();
+
 private:
+	int currentPk;
 	Ui::AngestellterWidget *ui;
 };
 

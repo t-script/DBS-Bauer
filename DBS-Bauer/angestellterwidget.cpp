@@ -1,10 +1,12 @@
 #include "angestellterwidget.h"
 #include "ui_angestellterwidget.h"
+#include "insertangestellterdialog.h"
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
+#include <QMessageBox>
 
 AngestellterWidget::AngestellterWidget(QWidget *parent) :
 	QWidget(parent),
@@ -38,7 +40,7 @@ AngestellterWidget::~AngestellterWidget()
 void AngestellterWidget::on_tableAngestellter_clicked(const QModelIndex &index)
 {
 	bool ok = false;
-	int currentPk = (angestellten->index(index.row(), 0)).data().toInt(&ok);
+	currentPk = (angestellten->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
 		qDebug() << angestellten->lastError();
@@ -51,4 +53,40 @@ void AngestellterWidget::on_tableAngestellter_clicked(const QModelIndex &index)
 		ui->tableArbeit->setModel(arbeiten);
 		ui->tableArbeit->hideColumn(0);
 	}
+}
+
+void AngestellterWidget::on_AngestellterNeu_clicked()
+{
+	InsertAngestellterDialog d;
+	d.setModal(true);
+	d.exec();
+	angestellten->select();
+}
+
+void AngestellterWidget::on_AngestellterTot_clicked()
+{
+	QSqlQuery q;
+	q.prepare("SELECT usp_DeleteAngestellter(?, 'f');");
+	q.bindValue(0,currentPk);
+	if (!q.exec()) {
+		QMessageBox m;
+		m.setText("Wenn sie fortfahren werden alle Einträge gelöscht die mit diesem Angestellten in verbindung stehen.");
+		m.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		m.setIcon(QMessageBox::Warning);
+		m.setDefaultButton(QMessageBox::No);
+		int ret = m.exec();
+		switch (ret) {
+		case QMessageBox::Yes:
+			q.clear();
+			q.prepare("SELECT usp_DeleteAngestellter(?, 't');");
+			q.bindValue(0,currentPk);
+			if (!q.exec()) {
+				qDebug() << q.lastError(); //need more indent
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	angestellten->select();
 }

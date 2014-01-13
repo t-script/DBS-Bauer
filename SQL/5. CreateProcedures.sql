@@ -1072,3 +1072,51 @@ BEGIN
 		VALUES(currval('saatgut_pk_saatgut_seq'),_Lager,_Bestand);
 END
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_AngestellterEinfuegen(
+		_Vorname text,
+		_Nachname text,
+		_SVN text,
+		_Gehalt float,
+		_Bankdaten text,
+		_Geschlecht text
+	)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	INSERT INTO ANGESTELLTER (
+		Vorname,
+		Nachname,
+		SVN,
+		Gehalt,
+		Bankdaten,
+		Geschlecht
+	)
+	VALUES (
+		_Vorname,
+		_Nachname,
+		_SVN,
+		_Gehalt,
+		_Bankdaten,
+		_Geschlecht::geschlecht
+	);
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_DeleteAngestellter(_id integer, _NUKE boolean)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	IF(_NUKE) THEN
+		DELETE FROM MASCHINE_VERWENDUNG WHERE FK_Angestellter = _id;
+		DELETE FROM ANGESTELLTER_STALLARBEITEN WHERE FK_Angestellter = _id;
+	END IF;
+	DELETE FROM ANGESTELLTER WHERE PK_Angestellter  = _id;
+END
+$$ LANGUAGE plpgsql;

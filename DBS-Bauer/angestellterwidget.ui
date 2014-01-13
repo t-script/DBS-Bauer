@@ -15,14 +15,34 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label_27">
-     <property name="text">
-      <string>Übersicht</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Übersicht:</string>
      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QTableView" name="tableAngestellter"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="AngestellterNeu">
+          <property name="text">
+           <string>Neuer Angestellter</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="AngestellterTot">
+          <property name="text">
+           <string>Angestellten löschen</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QTableView" name="tableAngestellter"/>
    </item>
    <item>
     <widget class="QLabel" name="label_28">
