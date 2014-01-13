@@ -976,3 +976,15 @@ BEGIN
 	DELETE FROM LAGER WHERE PK_Lager = _id;
 END
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_LagerEinfuegen(_Lagerart text, _Kapazitaet integer)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	INSERT INTO LAGER(Lagerart, Kapazitaet)
+		VALUES (_Lagerart, _Kapazitaet);
+END
+$$ LANGUAGE plpgsql;

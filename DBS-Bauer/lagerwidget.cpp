@@ -1,5 +1,6 @@
 #include "lagerwidget.h"
 #include "ui_lagerwidget.h"
+#include "insertlagerdialog.h"
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
@@ -107,7 +108,10 @@ void LagerWidget::SetupSaat(const QModelIndex &index)
 
 void LagerWidget::on_LagerEinfuegen_clicked()
 {
-
+	InsertLagerDialog d;
+	d.setModal(true);
+	d.exec();
+	lager->select();
 }
 
 void LagerWidget::on_LagerTot_clicked()
