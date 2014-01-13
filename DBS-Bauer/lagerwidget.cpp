@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
+#include <QMessageBox>
 
 LagerWidget::LagerWidget(QWidget *parent) :
 	QWidget(parent),
@@ -102,4 +103,35 @@ void LagerWidget::SetupSaat(const QModelIndex &index)
 	saat->setQuery(q);
 	ui->tableSaatgutbestand->setModel(saat);
 	ui->tableSaatgutbestand->hideColumn(0);
+}
+
+void LagerWidget::on_LagerEinfuegen_clicked()
+{
+
+}
+
+void LagerWidget::on_LagerTot_clicked()
+{
+	QSqlQuery q;
+	if (!q.exec(QString("SELECT usp_DeleteLager(%1, 'f') ;").arg(QString::number(currentPk)))) {
+
+
+		QMessageBox m;
+		m.setText("Wenn sie fortfahren werden alle Einträge gelöscht die mit diesem Lager in verbindung stehen.");
+		m.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		m.setIcon(QMessageBox::Warning);
+		m.setDefaultButton(QMessageBox::No);
+		int ret = m.exec();
+		switch (ret) {
+		case QMessageBox::Yes:
+
+			if (!q.exec(QString("SELECT usp_DeleteLager(%1, 't') ;").arg(QString::number(currentPk)))) {
+				qDebug() << q.lastError(); //need more indent
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	lager->select();
 }

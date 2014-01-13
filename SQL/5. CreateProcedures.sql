@@ -349,16 +349,24 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION usp_TierFutter(_tier integer)
 	RETURNS TABLE (
 		Pk_Futter integer,
+		FutterName text,
 		FutterMenge double precision
+		
 	) AS $$
 DECLARE
 BEGIN
 	RETURN
 		QUERY
 	SELECT
-		Fk_Futter, Menge
+		FK_Futter,
+		FUTTER.Name,
+		Menge
 	FROM
 		FUTTERMENGE_PRO_TIER
+	JOIN 
+		FUTTER
+	ON
+		FUTTERMENGE_PRO_TIER.FK_Futter = FUTTER.PK_Futter
 	WHERE
 		Fk_Tier = _tier;
 END
@@ -949,5 +957,22 @@ BEGIN
 		DELETE FROM MASCHINE_VERWENDUNG WHERE FK_Maschine = _id;
 	END IF;
 	DELETE FROM MASCHINE WHERE PK_Maschine = _id;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_DeleteLager(_id integer, _NUKE boolean)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	IF(_NUKE) THEN
+		DELETE FROM FUTTER_BESTAND WHERE FK_Lager = _id;
+		DELETE FROM DUENGER_BESTAND WHERE FK_Lager = _id;
+		DELETE FROM SAATGUT_BESTAND WHERE FK_Lager = _id;
+		DELETE FROM MASCHINE WHERE  FK_Lager  = _id;
+	END IF;
+	DELETE FROM LAGER WHERE PK_Lager = _id;
 END
 $$ LANGUAGE plpgsql;

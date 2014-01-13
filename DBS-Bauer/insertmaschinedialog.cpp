@@ -23,8 +23,14 @@ InsertMaschineDialog::~InsertMaschineDialog()
 void InsertMaschineDialog::on_buttonBox_accepted()
 {
 	QSqlQuery q;
+	q.prepare("SELECT PK_Lager FROM LAGER WHERE Lagerart = ?");
+	q.bindValue(0,ui->Lager->currentText());
+	q.exec();
+	q.first();
+	int pk = q.value(0).toInt();
+	q.clear();
 	q.prepare("SELECT usp_MaschineEinfuegen (?,?,?,?,?,?)");
-	q.bindValue(0,ui->Lager->currentIndex() + 1);
+	q.bindValue(0, pk);
 	q.bindValue(1,ui->Kosten->value());
 	q.bindValue(2,ui->Typ->text());
 	q.bindValue(3,ui->Name->text());

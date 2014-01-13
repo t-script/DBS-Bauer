@@ -22,13 +22,19 @@ void InsertFutterDialog::on_buttonBox_accepted()
 {
 
 	QSqlQuery q;
+	q.prepare("SELECT PK_Lager FROM LAGER WHERE Lagerart = ?");
+	q.bindValue(0,ui->Lager->currentText());
+	q.exec();
+	q.first();
+	int pk = q.value(0).toInt();
+	q.clear();
 	QString insertQuery =
 			QString("SELECT usp_FutterEinfuegen('%1',%2,%3,%4)")
 			.arg(
 				ui->Name->text(),
 				QString::number(ui->Preis->value()),
 				QString::number(ui->Bestand->value()),
-				QString::number(ui->Lager->currentIndex() + 1)
+				QString::number(pk)
 			);
 	if(!q.exec(insertQuery)) {
 		qDebug() << q.lastError();

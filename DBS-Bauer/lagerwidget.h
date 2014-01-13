@@ -24,6 +24,10 @@ public:
 private slots:
 	void on_tableLager_clicked(const QModelIndex &index);
 
+	void on_LagerEinfuegen_clicked();
+
+	void on_LagerTot_clicked();
+
 private:
 	Ui::LagerWidget *ui;
 	void SetupSubTables(const QModelIndex& index);
