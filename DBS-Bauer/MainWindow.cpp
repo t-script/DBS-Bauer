@@ -29,9 +29,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::setLogin(QString user, QString pass)
 {
-	qDebug() << user;
-	qDebug() << pass;
-
 	if (QSqlDatabase::isDriverAvailable("QPSQL")) {
 		db = QSqlDatabase::addDatabase("QPSQL");
 		db.setHostName("localhost");
@@ -39,16 +36,14 @@ void MainWindow::setLogin(QString user, QString pass)
 		db.setUserName(user);
 		db.setPassword(pass);
 
-		if (!db.open()){
+		if (!db.open()) {
 			ErrorDialog() << "can't open database\n";
-			//QApplication::exit();
 			tryLogin();
 		} else {
 			ErrorDialog() << "psql connection success\n";
 		}
 	} else {
 		ErrorDialog() << "Database Driver not available. libqt5sql5-psql is probably not installed\n";
-		//QApplication::exit();
 		tryLogin();
 	}
 }

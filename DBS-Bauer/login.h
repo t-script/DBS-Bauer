@@ -18,7 +18,12 @@ public:
     ~login();
 
 private slots:
-	void on_pushButton_clicked();
+	void on_buttonBox_accepted();
+
+	void on_buttonBox_rejected();
+
+protected:
+	virtual void keyPressEvent(QKeyEvent *);
 
 private:
     Ui::login *ui;

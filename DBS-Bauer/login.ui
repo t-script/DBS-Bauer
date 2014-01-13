@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>194</width>
-    <height>161</height>
+    <height>194</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -56,9 +56,9 @@
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>Connect</string>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
