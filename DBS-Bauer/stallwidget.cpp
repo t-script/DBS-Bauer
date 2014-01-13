@@ -17,6 +17,7 @@ StallWidget::StallWidget(QWidget *parent) :
 	tiere = new QSqlQueryModel(ui->tableStallTiere);
 	staelle = new QSqlTableModel(ui->tableStall);
 	staelle->setTable("stall");
+	staelle->setEditStrategy(QSqlTableModel::OnFieldChange);
 
 	if (!staelle->select()) {
 		qDebug() << staelle->lastError();
@@ -24,7 +25,6 @@ StallWidget::StallWidget(QWidget *parent) :
 	ui->tableStall->setModel(staelle);
 	ui->tableStall->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableStall->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableStall->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// pk_staelle verstecken
 	ui->tableStall->hideColumn(0);

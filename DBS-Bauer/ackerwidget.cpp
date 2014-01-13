@@ -16,6 +16,7 @@ AckerWidget::AckerWidget(QWidget *parent) :
 	ui->setupUi(this);
 	aecker = new QSqlTableModel(ui->tableAcker);
 	aecker->setTable("acker");
+	aecker->setEditStrategy(QSqlTableModel::OnFieldChange);
 	daten = new QSqlQueryModel(ui->tableAckerDaten);
 
 	if(!aecker->select()) {
@@ -25,7 +26,7 @@ AckerWidget::AckerWidget(QWidget *parent) :
 	ui->tableAcker->setModel(aecker);
 	ui->tableAcker->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableAcker->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableAcker->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	//ui->tableAcker->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// PK verstecken
 	ui->tableAcker->hideColumn(0);

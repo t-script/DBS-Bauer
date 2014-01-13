@@ -20,6 +20,7 @@ LagerWidget::LagerWidget(QWidget *parent) :
 	duenger = new QSqlQueryModel(ui->tableDungerbestand);
 	lager = new QSqlTableModel(ui->tableLager);
 	lager->setTable("lager");
+	lager->setEditStrategy(QSqlTableModel::OnFieldChange);
 
 	if(!lager->select()) {
 		ErrorDialog() << lager->lastError();
@@ -27,7 +28,6 @@ LagerWidget::LagerWidget(QWidget *parent) :
 	ui->tableLager->setModel(lager);
 	ui->tableLager->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableLager->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableLager->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// PK verstecken
 	ui->tableLager->hideColumn(0);

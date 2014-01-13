@@ -17,6 +17,7 @@ DuengerWidget::DuengerWidget(QWidget *parent) :
 	bestand = new QSqlQueryModel(ui->tableDungerbestand_2);
 	dunger = new QSqlTableModel(ui->tableDunger);
 	dunger->setTable("duenger");
+	dunger->setEditStrategy(QSqlTableModel::OnFieldChange);
 
 	if(!dunger->select()) {
 		ErrorDialog() << dunger->lastError();
@@ -25,7 +26,6 @@ DuengerWidget::DuengerWidget(QWidget *parent) :
 	ui->tableDunger->setModel(dunger);
 	ui->tableDunger->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableDunger->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableDunger->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// PK verstecken
 	ui->tableDunger->hideColumn(0);

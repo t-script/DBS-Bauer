@@ -16,6 +16,7 @@ AngestellterWidget::AngestellterWidget(QWidget *parent) :
 	ui->setupUi(this);
 	angestellten = new QSqlTableModel(ui->tableAngestellter);
 	angestellten->setTable("angestellter");
+	angestellten->setEditStrategy(QSqlTableModel::OnFieldChange);
 	arbeiten = new QSqlQueryModel(ui->tableArbeit);
 
 	if(angestellten->select() != true) {
@@ -25,7 +26,7 @@ AngestellterWidget::AngestellterWidget(QWidget *parent) :
 	ui->tableAngestellter->setModel(angestellten);
 	ui->tableAngestellter->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableAngestellter->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableAngestellter->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	//ui->tableAngestellter->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// PK verstecken
 	ui->tableAngestellter->hideColumn(0);

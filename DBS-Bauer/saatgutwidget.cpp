@@ -16,6 +16,7 @@ SaatgutWidget::SaatgutWidget(QWidget *parent) :
 	ui->setupUi(this);
 	saatgut = new QSqlTableModel(ui->tableSaagut);
 	saatgut->setTable("saatgut");
+	saatgut->setEditStrategy(QSqlTableModel::OnFieldChange);
 	bestand = new QSqlQueryModel(ui->tableSaatgutbestand_2);
 
 	if(saatgut->select() != true) {
@@ -25,7 +26,6 @@ SaatgutWidget::SaatgutWidget(QWidget *parent) :
 	ui->tableSaagut->setModel(saatgut);
 	ui->tableSaagut->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableSaagut->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableSaagut->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// PK verstecken
 	ui->tableSaagut->hideColumn(0);

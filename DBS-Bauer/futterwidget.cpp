@@ -17,6 +17,7 @@ FutterWidget::FutterWidget(QWidget *parent) :
 	futter = new QSqlTableModel(ui->tableFutter);
 	bestand = new QSqlQueryModel(ui->tableFutterBestand);
 	futter->setTable("futter");
+	futter->setEditStrategy(QSqlTableModel::OnFieldChange);
 	if(!futter->select())
 	{
 		ErrorDialog() << futter->lastError();
@@ -24,7 +25,6 @@ FutterWidget::FutterWidget(QWidget *parent) :
 	ui->tableFutter->setModel(futter);
 	ui->tableFutter->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableFutter->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableFutter->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// PK verstecken
 	ui->tableFutter->hideColumn(0);

@@ -20,6 +20,7 @@ TierWidget::TierWidget(QWidget *parent) :
 	attribute = new QSqlQueryModel(ui->tableAttribute);
 	futter = new QSqlQueryModel(ui->tableFutterTier);
 	tiere->setTable("tier");
+	tiere->setEditStrategy(QSqlTableModel::OnFieldChange);
 	if(!tiere->select()) {
 		ErrorDialog() << tiere->lastError();
 	}
@@ -32,7 +33,7 @@ TierWidget::TierWidget(QWidget *parent) :
 
 	ui->tableTier->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableTier->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableTier->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	//ui->tableTier->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 TierWidget::~TierWidget()

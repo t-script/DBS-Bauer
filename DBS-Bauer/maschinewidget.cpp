@@ -17,6 +17,7 @@ MaschineWidget::MaschineWidget(QWidget *parent) :
 	chronik = new QSqlQueryModel(ui->tableVerwendung);
 	maschinen = new QSqlTableModel(ui->tableMaschine);
 	maschinen->setTable("maschine");
+	maschinen->setEditStrategy(QSqlTableModel::OnFieldChange);
 
 	if(!maschinen->select()) {
 		ErrorDialog() << maschinen->lastError();
@@ -24,7 +25,6 @@ MaschineWidget::MaschineWidget(QWidget *parent) :
 	ui->tableMaschine->setModel(maschinen);
 	ui->tableMaschine->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableMaschine->setSelectionMode(QAbstractItemView::SingleSelection);
-	ui->tableMaschine->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 	// PK verstecken
 	ui->tableMaschine->hideColumn(0);
