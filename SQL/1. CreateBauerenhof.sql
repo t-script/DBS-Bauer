@@ -7,6 +7,7 @@ BEGIN
 	END IF;
 END$$;
 
+--Rolle mit Login ist equivalent zu User
 CREATE ROLE baueradmin 
 	PASSWORD 'bauer'  
 	NOSUPERUSER 

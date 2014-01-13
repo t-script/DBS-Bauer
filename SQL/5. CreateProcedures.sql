@@ -48,12 +48,12 @@ CREATE OR REPLACE FUNCTION usp_AngestellterStallarbeiten(_id integer, _start dat
 		Dauer interval
 	)
 	AS $func$
-declare
+DECLARE
 
 BEGIN
 
 RETURN QUERY
-	select
+	SELECT
 		ANGESTELLTER.PK_Angestellter,
 		ANGESTELLTER.Vorname,
 		ANGESTELLTER.Nachname,
@@ -71,7 +71,7 @@ RETURN QUERY
 		ANGESTELLTER.PK_Angestellter = _id AND
 		ANGESTELLTER_STALLARBEITEN.Datum BETWEEN _start and _end;
 end
-$func$ language plpgsql;
+$func$ LANGUAGE plpgsql;
 
 COMMENT ON 
 	FUNCTION usp_AngestellterStallarbeiten(_id integer, _start date, _end Date) 
@@ -90,7 +90,7 @@ CREATE OR REPLACE FUNCTION usp_MaschineVerwendung(_id integer, _start date, _end
 		name text
 	)
 	AS $func$
-declare
+DECLARE
 
 BEGIN
 
@@ -118,7 +118,8 @@ RETURN QUERY
 		ANGESTELLTER.PK_Angestellter = _id AND
 		MASCHINE_VERWENDUNG.Verwendungsdatum BETWEEN _start and _end;
 end
-$func$ language plpgsql;
+$func$ LANGUAGE plpgsql
+SECURITY DEFINER;
 
 COMMENT ON
 	FUNCTION usp_MaschineVerwendung(_id integer, _start date, _end Date)
@@ -419,7 +420,7 @@ CREATE OR REPLACE FUNCTION usp_Stallarbeiten(_stall integer)
 		Dauer interval
 	)
 	AS $func$
-declare
+DECLARE
 
 BEGIN
 
@@ -446,7 +447,8 @@ BEGIN
 	WHERE
 		STALL.Pk_Stall = _stall;
 end
-$func$ language plpgsql;
+$func$ LANGUAGE plpgsql
+SECURITY DEFINER;
 
 CREATE OR REPLACE FUNCTION usp_Restkapazitaet(_lager integer)
 	RETURNS bigint AS $$
