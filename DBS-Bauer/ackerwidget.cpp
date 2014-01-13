@@ -1,5 +1,6 @@
 #include "ackerwidget.h"
 #include "ui_ackerwidget.h"
+#include "insertackerdialog.h"
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
@@ -56,7 +57,10 @@ void AckerWidget::on_tableAcker_clicked(const QModelIndex &index)
 
 void AckerWidget::on_AckerNeu_clicked()
 {
-
+	InsertAckerDialog d;
+	d.setModal(true);
+	d.exec();
+	aecker->select();
 }
 
 void AckerWidget::on_AckerTot_clicked()

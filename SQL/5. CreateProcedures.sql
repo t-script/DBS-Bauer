@@ -1002,3 +1002,15 @@ BEGIN
 	DELETE FROM ACKER WHERE PK_Acker = _id;
 END
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_AckerEinfuegen(_Standort text, _Groesse integer)
+	RETURNS VOID
+	AS $$
+DECLARE
+	
+BEGIN
+	INSERT INTO ACKER(Standort, Groesse)
+		VALUES (_Standort, _Groesse);
+END
+$$ LANGUAGE plpgsql;
