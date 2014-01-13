@@ -13,8 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	log = new login();
 	log->setModal(true);
 	log->setVisible(true);
-	log->exec();
-	setLogin(log->user, log->pass);
+	tryLogin();
 
 	// setup
 	ui->setupUi(this);
@@ -30,6 +29,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::setLogin(QString user, QString pass)
 {
+	qDebug() << user;
+	qDebug() << pass;
+
 	if (QSqlDatabase::isDriverAvailable("QPSQL")) {
 		db = QSqlDatabase::addDatabase("QPSQL");
 		db.setHostName("localhost");
@@ -39,12 +41,20 @@ void MainWindow::setLogin(QString user, QString pass)
 
 		if (!db.open()){
 			ErrorDialog() << "can't open database\n";
-			QApplication::exit();
+			//QApplication::exit();
+			tryLogin();
 		} else {
 			ErrorDialog() << "psql connection success\n";
 		}
 	} else {
 		ErrorDialog() << "Database Driver not available. libqt5sql5-psql is probably not installed\n";
-		QApplication::exit();
+		//QApplication::exit();
+		tryLogin();
 	}
+}
+
+void MainWindow::tryLogin()
+{
+	log->exec();
+	setLogin(log->user, log->pass);
 }

@@ -8,7 +8,7 @@ login::login(QWidget *parent) :
 	ui(new Ui::login)
 {
 	ui->setupUi(this);
-	setWindowFlags(Qt::FramelessWindowHint);
+	//setWindowFlags(Qt::FramelessWindowHint);
 }
 
 login::~login()
@@ -16,11 +16,9 @@ login::~login()
 	delete ui;
 }
 
-void login::on_buttonBox_clicked(QAbstractButton *button)
+void login::on_pushButton_clicked()
 {
-	if (button->text() == "&OK") {
-		user = ui->Benutzer->text();
-		pass = ui->Passwort->text();
-	} else {
-	}
+	user = ui->Benutzer->text();
+	pass = ui->Passwort->text();
+	close();
 }

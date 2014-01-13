@@ -23,6 +23,7 @@ private slots:
 private:
 	Ui::MainWindow *ui;
 	void setLogin(QString user, QString pass);
+	void tryLogin();
 };
 
 #endif // MAINWINDOW_H
