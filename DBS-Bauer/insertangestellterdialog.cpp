@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include "errordialog.h"
 
 InsertAngestellterDialog::InsertAngestellterDialog(QWidget *parent) :
 	QDialog(parent),
@@ -36,6 +37,6 @@ void InsertAngestellterDialog::on_buttonBox_accepted()
 	q.bindValue(4, ui->Bankdaten->text());
 	q.bindValue(5, geschl);
 	if(!q.exec()) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 }

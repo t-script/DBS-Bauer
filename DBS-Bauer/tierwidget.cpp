@@ -8,6 +8,7 @@
 #include <QSqlRecord>
 #include <QSqlResult>
 #include <QException>
+#include "errordialog.h"
 
 TierWidget::TierWidget(QWidget *parent) :
 	QWidget(parent),
@@ -20,7 +21,7 @@ TierWidget::TierWidget(QWidget *parent) :
 	futter = new QSqlQueryModel(ui->tableFutterTier);
 	tiere->setTable("tier");
 	if(!tiere->select()) {
-		qDebug() << tiere->lastError();
+		ErrorDialog() << tiere->lastError();
 	}
 	ui->tableTier->setModel(tiere);
 	ui->tableArzt->setModel(tierarzt);
@@ -54,7 +55,7 @@ void TierWidget::TierTableChanged(const QModelIndex &index)
 	currentPk = (tiere->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
-		qDebug() << tiere->lastError();
+		ErrorDialog() << tiere->lastError();
 	} else {
 		SetupSubTables(index);
 	}
@@ -91,7 +92,7 @@ void TierWidget::SetupStall(const QModelIndex &index)
 	ui->comboStall->clear();
 
 	if (!stall.select() || !ok) {
-		qDebug() << (ok ? "stall.select() failed" : "data().toInt() failed");
+		ErrorDialog() << (ok ? "stall.select() failed" : "data().toInt() failed");
 	}
 	for (int i = 0; i < stall.rowCount(); i++) {
 		ui->comboStall->addItem(stall.index(i, 1).data().toString());
@@ -105,7 +106,7 @@ void TierWidget::SetupAttribute(const QModelIndex &index)
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT * FROM usp_TierAttribute(%1);").arg(QString::number(currentPk)))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 	attribute->setQuery(q);
 	ui->tableAttribute->setModel(attribute);
@@ -116,7 +117,7 @@ void TierWidget::SetupTierarzt(const QModelIndex &index)
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT * FROM usp_TierArztBesuche(%1)").arg(currentPk))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 	tierarzt->setQuery(q);
 	ui->tableArzt->setModel(tierarzt);
@@ -127,7 +128,7 @@ void TierWidget::SetupFutterTier(const QModelIndex &index)
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT * FROM usp_TierFutter(%1)").arg(currentPk))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 	futter->setQuery(q);
 	ui->tableFutterTier->setModel(futter);
@@ -143,7 +144,7 @@ void TierWidget::on_comboStall_activated(const QString &arg1)
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT * FROM usp_UpdateTierStall('%1',%2);").arg(arg1, QString::number(currentPk)))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 }
 
@@ -159,7 +160,7 @@ void TierWidget::on_tierTot_clicked()
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT usp_DeleteTier(%1) ;").arg(QString::number(currentPk)))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 	tiere->select();
 

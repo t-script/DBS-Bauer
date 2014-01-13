@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include "errordialog.h"
 
 LagerWidget::LagerWidget(QWidget *parent) :
 	QWidget(parent),
@@ -21,7 +22,7 @@ LagerWidget::LagerWidget(QWidget *parent) :
 	lager->setTable("lager");
 
 	if(!lager->select()) {
-		qDebug() << lager->lastError();
+		ErrorDialog() << lager->lastError();
 	}
 	ui->tableLager->setModel(lager);
 	ui->tableLager->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -48,7 +49,7 @@ void LagerWidget::on_tableLager_clicked(const QModelIndex &index)
 	currentPk = (lager->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
-		qDebug() << lager->lastError();
+		ErrorDialog() << lager->lastError();
 	} else {
 		SetupSubTables(index);
 	}
@@ -66,7 +67,7 @@ void LagerWidget::SetupDuenger(const QModelIndex &index)
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT * FROM usp_DuengerBestand(%1);").arg(QString::number(currentPk)))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 	duenger->setQuery(q);
 	ui->tableDungerbestand->setModel(duenger);
@@ -77,7 +78,7 @@ void LagerWidget::SetupFutter(const QModelIndex &index)
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT * FROM usp_FutterLagerBestand(%1);").arg(QString::number(currentPk)))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 	futter->setQuery(q);
 	ui->tableFutterbestand->setModel(futter);
@@ -88,7 +89,7 @@ void LagerWidget::SetupMaschinen(const QModelIndex &index)
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT * FROM usp_LagerMaschine(%1);").arg(QString::number(currentPk)))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 	maschine->setQuery(q);
 	ui->tableLagerMaschine->setModel(maschine);
@@ -99,7 +100,7 @@ void LagerWidget::SetupSaat(const QModelIndex &index)
 {
 	QSqlQuery q;
 	if (!q.exec(QString("SELECT * FROM usp_SaatgutBestand(%1);").arg(QString::number(currentPk)))) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 	saat->setQuery(q);
 	ui->tableSaatgutbestand->setModel(saat);
@@ -130,7 +131,7 @@ void LagerWidget::on_LagerTot_clicked()
 		case QMessageBox::Yes:
 
 			if (!q.exec(QString("SELECT usp_DeleteLager(%1, 't') ;").arg(QString::number(currentPk)))) {
-				qDebug() << q.lastError(); //need more indent
+				ErrorDialog() << q.lastError(); //need more indent
 			}
 			break;
 		default:

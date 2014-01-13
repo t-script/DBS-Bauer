@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include "errordialog.h"
 
 InsertMaschineDialog::InsertMaschineDialog(QWidget *parent) :
 	QDialog(parent),
@@ -37,7 +38,7 @@ void InsertMaschineDialog::on_buttonBox_accepted()
 	q.bindValue(4,ui->Anschaffungsdatum->date().toString("yyyy-MM-dd"));
 	q.bindValue(5,ui->Abschreibungsdatum->date().toString("yyyy-MM-dd"));
 	if(!q.exec()){
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 }
 
@@ -48,7 +49,7 @@ void InsertMaschineDialog::SetupLager()
 	ui->Lager->clear();
 
 	if(!q.exec("SELECT * FROM \"v_Lagername\"")) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 
 	while(q.next()) {

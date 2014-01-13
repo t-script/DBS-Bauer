@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include "errordialog.h"
 
 InsertTierDialog::InsertTierDialog(QWidget *parent) :
 	QDialog(parent),
@@ -53,7 +54,7 @@ void InsertTierDialog::on_buttonBox_accepted()
 				QString::number(ui->futterMenge->value())
 			);
 	if(!q.exec(insertQuery)) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 }
 
@@ -64,7 +65,7 @@ void InsertTierDialog::SetupTierart()
 	ui->tierart->clear();
 
 	if(!q.exec("SELECT * FROM usp_GetAttribut('Tierart')")) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 
 	while(q.next()) {
@@ -82,7 +83,7 @@ void InsertTierDialog::SetupFutter()
 	ui->futter->clear();
 
 	if(!q.exec("SELECT * FROM \"v_FutterName\"")) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 
 	while(q.next()) {
@@ -100,7 +101,7 @@ void InsertTierDialog::SetupStall()
 	ui->stall->clear();
 
 	if(!q.exec("SELECT * FROM \"v_Stallart\"")) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 
 	while(q.next()) {

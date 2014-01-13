@@ -6,6 +6,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include "errordialog.h"
 
 StallWidget::StallWidget(QWidget *parent) :
 	QWidget(parent),

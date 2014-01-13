@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include "errordialog.h"
 
 AckerWidget::AckerWidget(QWidget *parent) :
 	QWidget(parent),
@@ -18,7 +19,7 @@ AckerWidget::AckerWidget(QWidget *parent) :
 	daten = new QSqlQueryModel(ui->tableAckerDaten);
 
 	if(!aecker->select()) {
-		qDebug() << aecker->lastError();
+		ErrorDialog() << aecker->lastError();
 	}
 
 	ui->tableAcker->setModel(aecker);
@@ -43,11 +44,11 @@ void AckerWidget::on_tableAcker_clicked(const QModelIndex &index)
 	currentPk = (aecker->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
-		qDebug() << aecker->lastError();
+		ErrorDialog() << aecker->lastError();
 	} else {
 		QSqlQuery q;
 		if (!q.exec(QString("SELECT * FROM usp_AckerDaten(%1)").arg(currentPk))) {
-			qDebug() << q.lastError();
+			ErrorDialog() << q.lastError();
 		}
 		daten->setQuery(q);
 		ui->tableAckerDaten->setModel(daten);
@@ -79,7 +80,7 @@ void AckerWidget::on_AckerTot_clicked()
 		case QMessageBox::Yes:
 
 			if (!q.exec(QString("SELECT usp_DeleteAcker(%1, 't') ;").arg(QString::number(currentPk)))) {
-				qDebug() << q.lastError(); //need more indent
+				ErrorDialog() << q.lastError(); //need more indent
 			}
 			break;
 		default:

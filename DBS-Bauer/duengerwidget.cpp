@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include "errordialog.h"
 
 DuengerWidget::DuengerWidget(QWidget *parent) :
 	QWidget(parent),
@@ -18,7 +19,7 @@ DuengerWidget::DuengerWidget(QWidget *parent) :
 	dunger->setTable("duenger");
 
 	if(!dunger->select()) {
-		qDebug() << dunger->lastError();
+		ErrorDialog() << dunger->lastError();
 	}
 
 	ui->tableDunger->setModel(dunger);
@@ -43,11 +44,11 @@ void DuengerWidget::on_tableDunger_clicked(const QModelIndex &index)
 	currentPk = (dunger->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
-		qDebug() << dunger->lastError();
+		ErrorDialog() << dunger->lastError();
 	} else {
 		QSqlQuery q;
 		if (!q.exec(QString("SELECT * FROM usp_DuengerLagerBestand(%1)").arg(currentPk))) {
-			qDebug() << q.lastError();
+			ErrorDialog() << q.lastError();
 		}
 		bestand->setQuery(q);
 		ui->tableDungerbestand_2->setModel(bestand);
@@ -81,7 +82,7 @@ void DuengerWidget::on_DuengerTot_clicked()
 			q.prepare("SELECT usp_DeleteDuenger(?, 't');");
 			q.bindValue(0,currentPk);
 			if (!q.exec()) {
-				qDebug() << q.lastError(); //need more indent
+				ErrorDialog() << q.lastError(); //need more indent
 			}
 			break;
 		default:

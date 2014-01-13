@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include "errordialog.h"
 
 InsertDuengerDialog::InsertDuengerDialog(QWidget *parent) :
 	QDialog(parent),
@@ -33,7 +34,7 @@ void InsertDuengerDialog::on_buttonBox_accepted()
 	q.bindValue(2,pk);
 	q.bindValue(3,ui->Bestand->value());
 	if(!q.exec()){
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 
 }
@@ -45,7 +46,7 @@ void InsertDuengerDialog::SetupLager()
 	ui->Lager->clear();
 
 	if(!q.exec("SELECT * FROM \"v_Lagername\"")) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 
 	while(q.next()) {

@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include "errordialog.h"
 
 InsertAckerDialog::InsertAckerDialog(QWidget *parent) :
 	QDialog(parent),
@@ -24,7 +25,7 @@ void InsertAckerDialog::on_buttonBox_accepted()
 	q.bindValue(0,ui->Standort->text());
 	q.bindValue(1,ui->Groesse->value());
 	if(!q.exec()) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 
 }

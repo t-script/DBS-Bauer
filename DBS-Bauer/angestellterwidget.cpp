@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include "errordialog.h"
 
 AngestellterWidget::AngestellterWidget(QWidget *parent) :
 	QWidget(parent),
@@ -18,7 +19,7 @@ AngestellterWidget::AngestellterWidget(QWidget *parent) :
 	arbeiten = new QSqlQueryModel(ui->tableArbeit);
 
 	if(angestellten->select() != true) {
-		qDebug() << angestellten->lastError();
+		ErrorDialog() << angestellten->lastError();
 	}
 
 	ui->tableAngestellter->setModel(angestellten);
@@ -43,11 +44,11 @@ void AngestellterWidget::on_tableAngestellter_clicked(const QModelIndex &index)
 	currentPk = (angestellten->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
-		qDebug() << angestellten->lastError();
+		ErrorDialog() << angestellten->lastError();
 	} else {
 		QSqlQuery q;
 		if (!q.exec(QString("SELECT * FROM usp_AngestellterArbeiten(%1)").arg(currentPk))) {
-			qDebug() << q.lastError();
+			ErrorDialog() << q.lastError();
 		}
 		arbeiten->setQuery(q);
 		ui->tableArbeit->setModel(arbeiten);
@@ -81,7 +82,7 @@ void AngestellterWidget::on_AngestellterTot_clicked()
 			q.prepare("SELECT usp_DeleteAngestellter(?, 't');");
 			q.bindValue(0,currentPk);
 			if (!q.exec()) {
-				qDebug() << q.lastError(); //need more indent
+				ErrorDialog() << q.lastError(); //need more indent
 			}
 			break;
 		default:

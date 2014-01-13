@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     insertackerdialog.cpp \
     insertduengerdialog.cpp \
     insertsaatgutdialog.cpp \
-    insertangestellterdialog.cpp
+    insertangestellterdialog.cpp \
+    errordialog.cpp
 
 HEADERS  += MainWindow.h \
     stallwidget.h \
@@ -55,7 +56,8 @@ HEADERS  += MainWindow.h \
     insertackerdialog.h \
     insertduengerdialog.h \
     insertsaatgutdialog.h \
-    insertangestellterdialog.h
+    insertangestellterdialog.h \
+    errordialog.h
 
 FORMS    += MainWindow.ui \
     stallwidget.ui \

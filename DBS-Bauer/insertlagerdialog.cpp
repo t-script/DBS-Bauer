@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
-
+#include "errordialog.h"
 
 InsertLagerDialog::InsertLagerDialog(QWidget *parent) :
 	QDialog(parent),
@@ -25,6 +25,6 @@ void InsertLagerDialog::on_buttonBox_accepted()
 	q.bindValue(0,ui->Lagerart->text());
 	q.bindValue(1,ui->Kapazitaet->value());
 	if(!q.exec()) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 }

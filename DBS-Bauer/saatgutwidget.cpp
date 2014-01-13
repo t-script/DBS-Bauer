@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include "errordialog.h"
 
 SaatgutWidget::SaatgutWidget(QWidget *parent) :
 	QWidget(parent),
@@ -18,7 +19,7 @@ SaatgutWidget::SaatgutWidget(QWidget *parent) :
 	bestand = new QSqlQueryModel(ui->tableSaatgutbestand_2);
 
 	if(saatgut->select() != true) {
-		qDebug() << saatgut->lastError();
+		ErrorDialog() << saatgut->lastError();
 	}
 
 	ui->tableSaagut->setModel(saatgut);
@@ -43,11 +44,11 @@ void SaatgutWidget::on_tableSaagut_clicked(const QModelIndex &index)
 	currentPk = (saatgut->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
-		qDebug() << saatgut->lastError();
+		ErrorDialog() << saatgut->lastError();
 	} else {
 		QSqlQuery q;
 		if (!q.exec(QString("SELECT * FROM usp_SaatgutLagerBestand(%1)").arg(currentPk))) {
-			qDebug() << q.lastError();
+			ErrorDialog() << q.lastError();
 		}
 		bestand->setQuery(q);
 		ui->tableSaatgutbestand_2->setModel(bestand);
@@ -82,7 +83,7 @@ void SaatgutWidget::on_SaatgutTot_clicked()
 			q.prepare("SELECT usp_DeleteSaatgut(?, 't');");
 			q.bindValue(0,currentPk);
 			if (!q.exec()) {
-				qDebug() << q.lastError(); //need more indent
+				ErrorDialog() << q.lastError(); //need more indent
 			}
 			break;
 		default:

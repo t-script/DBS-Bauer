@@ -7,6 +7,7 @@
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include "errordialog.h"
 
 FutterWidget::FutterWidget(QWidget *parent) :
 	QWidget(parent),
@@ -18,7 +19,7 @@ FutterWidget::FutterWidget(QWidget *parent) :
 	futter->setTable("futter");
 	if(!futter->select())
 	{
-		qDebug() << futter->lastError();
+		ErrorDialog() << futter->lastError();
 	}
 	ui->tableFutter->setModel(futter);
 	ui->tableFutter->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -42,11 +43,11 @@ void FutterWidget::on_tableFutter_clicked(const QModelIndex &index)
 	currentPk = (futter->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
-		qDebug() << futter->lastError();
+		ErrorDialog() << futter->lastError();
 	} else {
 		QSqlQuery q;
 		if (!q.exec(QString("SELECT * FROM usp_FutterBestand(%1)").arg(currentPk))) {
-			qDebug() << q.lastError();
+			ErrorDialog() << q.lastError();
 		}
 		bestand->setQuery(q);
 		ui->tableFutterBestand->setModel(bestand);
@@ -78,7 +79,7 @@ void FutterWidget::on_futtertot_clicked()
 		case QMessageBox::Yes:
 
 			if (!q.exec(QString("SELECT usp_DeleteFutter(%1, 't') ;").arg(QString::number(currentPk)))) {
-				qDebug() << q.lastError(); //need more indent
+				ErrorDialog() << q.lastError(); //need more indent
 			}
 			break;
 		default:

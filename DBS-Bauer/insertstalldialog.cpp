@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
-
+#include "errordialog.h"
 
 InsertStallDialog::InsertStallDialog(QWidget *parent) :
 	QDialog(parent),
@@ -30,6 +30,6 @@ void InsertStallDialog::on_buttonBox_accepted()
 				ui->standort->text()
 			);
 	if(!q.exec(insertQuery)) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 }

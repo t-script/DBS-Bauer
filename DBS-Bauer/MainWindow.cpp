@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include <QDebug>
+#include "errordialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -26,13 +27,13 @@ void MainWindow::connectDb()
 		db.setUserName("baueradmin");
 		db.setPassword("bauer");
 		if (!db.open()){
-			qDebug() << "can't open database\n";
+			ErrorDialog() << "can't open database\n";
 			//return 0;
 		} else {
-			qDebug() << "psql connection success\n";
+			ErrorDialog() << "psql connection success\n";
 		}
 	} else {
-		qDebug() << "Database Driver not available. libqt5sql5-psql is probably not installed\n";
+		ErrorDialog() << "Database Driver not available. libqt5sql5-psql is probably not installed\n";
 
 	}
 

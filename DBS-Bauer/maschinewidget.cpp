@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include "errordialog.h"
 
 MaschineWidget::MaschineWidget(QWidget *parent) :
 	QWidget(parent),
@@ -18,7 +19,7 @@ MaschineWidget::MaschineWidget(QWidget *parent) :
 	maschinen->setTable("maschine");
 
 	if(!maschinen->select()) {
-		qDebug() << maschinen->lastError();
+		ErrorDialog() << maschinen->lastError();
 	}
 	ui->tableMaschine->setModel(maschinen);
 	ui->tableMaschine->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -43,11 +44,11 @@ void MaschineWidget::on_tableMaschine_clicked(const QModelIndex &index)
 	currentPk = (maschinen->index(index.row(), 0)).data().toInt(&ok);
 
 	if (currentPk <= 0 || !ok) {
-		qDebug() << maschinen->lastError();
+		ErrorDialog() << maschinen->lastError();
 	} else {
 		QSqlQuery q;
 		if (!q.exec(QString("SELECT * FROM usp_MaschineChronik(%1)").arg(currentPk))) {
-			qDebug() << q.lastError();
+			ErrorDialog() << q.lastError();
 		}
 		chronik->setQuery(q);
 		ui->tableVerwendung->setModel(chronik);
@@ -79,7 +80,7 @@ void MaschineWidget::on_MaschineTot_clicked()
 		case QMessageBox::Yes:
 
 			if (!q.exec(QString("SELECT usp_DeleteMaschine(%1, 't') ;").arg(QString::number(currentPk)))) {
-				qDebug() << q.lastError(); //need more indent
+				ErrorDialog() << q.lastError(); //need more indent
 			}
 			break;
 		default:

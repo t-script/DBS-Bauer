@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include "errordialog.h"
 
 InsertFutterDialog::InsertFutterDialog(QWidget *parent) :
 	QDialog(parent),
@@ -37,7 +38,7 @@ void InsertFutterDialog::on_buttonBox_accepted()
 				QString::number(pk)
 			);
 	if(!q.exec(insertQuery)) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 }
 
@@ -48,7 +49,7 @@ void InsertFutterDialog::SetupLager()
 	ui->Lager->clear();
 
 	if(!q.exec("SELECT * FROM \"v_Lagername\"")) {
-		qDebug() << q.lastError();
+		ErrorDialog() << q.lastError();
 	}
 
 	while(q.next()) {
