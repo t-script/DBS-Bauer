@@ -34,7 +34,7 @@ BEGIN
 	RAISE NOTICE '_Duenger_Bestand %', _Duenger_Bestand;
 	RAISE NOTICE '_Lager_Bestand %', _Lager_Bestand;
 	RAISE NOTICE 'NEW %', NEW.FK_Lager;
-	RAISE NOTICE 'NEW %', NEW.Bestand;*/
+	RAISE NOTICE 'NEW %', NEW.Bestand;--*/
 	
 	IF(TG_OP = 'UPDATE') THEN
 		_Unterschied := NEW.Bestand - OLD.Bestand;

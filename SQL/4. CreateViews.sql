@@ -114,3 +114,13 @@ CREATE OR REPLACE VIEW "v_Stallart" AS
 		STALL
 	ORDER BY
 		PK_Stall;
+
+CREATE OR REPLACE VIEW "v_Lagername" AS
+	SELECT
+		LAGER.Lagerart,
+		LAGER.PK_Lager
+
+	FROM
+		public.LAGER
+	ORDER BY
+		PK_Lager;

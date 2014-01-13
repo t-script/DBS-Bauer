@@ -892,6 +892,17 @@ END
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION
+	usp_FutterEinfuegen(_Name text, _Preis float, _Bestand integer,_Lager integer)
+	RETURNS VOID
+	AS $$
+DECLARE
+BEGIN
+	INSERT INTO FUTTER(Name, Preis) VALUES(_Name, _Preis);
+	INSERT INTO FUTTER_BESTAND VALUES(currval('futter_pk_futter_seq'), _Lager, _Bestand);
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
 	usp_DeleteFutter(_id integer, _NUKE boolean)
 	RETURNS VOID
 	AS $$

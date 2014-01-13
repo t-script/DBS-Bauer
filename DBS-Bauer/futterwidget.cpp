@@ -1,5 +1,6 @@
 #include "futterwidget.h"
 #include "ui_futterwidget.h"
+#include "insertfutterdialog.h"
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
 #include <QSqlError>
@@ -55,7 +56,10 @@ void FutterWidget::on_tableFutter_clicked(const QModelIndex &index)
 
 void FutterWidget::on_futtereinfuegen_clicked()
 {
-
+	InsertFutterDialog d;
+	d.setModal(true);
+	d.exec();
+	futter->select();
 }
 
 void FutterWidget::on_futtertot_clicked()
