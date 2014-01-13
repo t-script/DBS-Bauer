@@ -2,13 +2,22 @@
 <ui version="4.0">
  <class>login</class>
  <widget class="QDialog" name="login">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>181</width>
-    <height>148</height>
+    <width>194</width>
+    <height>161</height>
    </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
