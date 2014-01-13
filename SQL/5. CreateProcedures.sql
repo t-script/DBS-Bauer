@@ -1014,3 +1014,32 @@ BEGIN
 		VALUES (_Standort, _Groesse);
 END
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_DeleteDuenger(_id integer, _NUKE boolean)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	IF(_NUKE) THEN
+		DELETE FROM ACKERDATEN WHERE FK_Duenger = _id;
+		DELETE FROM DUENGER_BESTAND WHERE FK_Duenger = _id;
+	END IF;
+	DELETE FROM DUENGER WHERE PK_Duenger = _id;
+END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION
+	usp_DuengerEinfuegen(_Name text, _Preis double precision, _Lager integer, _Bestand integer)
+	RETURNS VOID
+	AS $$
+DECLARE
+
+BEGIN
+	INSERT INTO DUENGER(Name,Preis)
+		VALUES(_Name,_Preis);
+	INSERT INTO DUENGER_BESTAND(FK_Lager, Bestand)
+		VALUES(_Lager,_Bestand);
+END
+$$ LANGUAGE plpgsql;

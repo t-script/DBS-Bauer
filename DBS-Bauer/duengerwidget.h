@@ -20,7 +20,12 @@ public:
 private slots:
 	void on_tableDunger_clicked(const QModelIndex &index);
 
+	void on_DuengerNeu_clicked();
+
+	void on_DuengerTot_clicked();
+
 private:
+	int currentPk;
 	Ui::DuengerWidget *ui;
 };
 
